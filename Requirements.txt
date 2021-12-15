@@ -1,2 +1,4 @@
 pylint
 html-linter
+flask
+pandas
