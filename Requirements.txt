@@ -2,3 +2,6 @@ pylint
 html-linter
 flask
 pandas
+flask-login
+SQLAlchemy
+Flask-SQLAlchemy

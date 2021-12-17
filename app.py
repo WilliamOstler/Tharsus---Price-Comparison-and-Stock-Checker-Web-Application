@@ -1,11 +1,16 @@
+
 from flask import Flask, render_template, request, send_file
 from pandas import read_excel
+from flask_sqlalchemy import SQLAlchemy
 import os
-from Part import Part
+
 
 UPLOAD_FOLDER = 'uploads/'
 app = Flask("excel-app")
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+db = SQLAlchemy(app)
+
 @app.route("/")
 def homepage():
     return render_template("home.html")
@@ -33,13 +38,6 @@ def output():
             data = db.values
             db.to_excel("./"+UPLOAD_FOLDER+"/"+fileName, sheet_name="Updated", index=False)
             return render_template("output.html", columnNames=columnNames, data=data, fileName=fileName)
-
-@app.route("/calculate")
-def calculate():
-
-    part1 = Part("XZZY", "Enginez", 100)
-    part2 = Part("FXAS","BOB", 20)
-    parts = (part1, part2)
 
 
 @app.route('/download/<fileName>')
