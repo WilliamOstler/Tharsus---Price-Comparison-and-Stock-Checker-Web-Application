@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 import requests
+import re
 
 
 def findchipsscraper(partnumber):
@@ -8,10 +9,9 @@ def findchipsscraper(partnumber):
     parts = soup.find_all('div', class_='distributor-results')
 
     for part in parts:
-        stock = part.find('td', class_='td-stock').text.replace(' ', '').replace('\n', '').replace(',', '').replace(
-            'Americas-', '').replace(
-            'InStock', '').replace('FactoryStock', '').replace('Temporarily out of stock', '').replace('Europe-','')
-        if int(stock) != 0:
+        stock = part.find('td', class_='td-stock').text
+        numeric_string = re.sub("[^0-9]", "", stock)
+        if int(numeric_string) != 0:
             distributor = part.find('h3', class_='distributor-title').text.replace(' ', '').replace('\n', '')
             price = part.find('td', class_='td-price').text.replace('$', '').replace(
                 '£', '').replace('€', '').replace('See More', '')
@@ -27,11 +27,11 @@ def findchipsscraper(partnumber):
 
                 print(f'''
                     Distributor: {distributor}
-                    stock: {stock}
+                    stock: {numeric_string}
                     price for quantity: {bomb}
                     ''')
 
 
 if __name__ == '__main__':
 
-    findchipsscraper('LM324DTBR2')
+    findchipsscraper('ICF-308-T-O-TR')
