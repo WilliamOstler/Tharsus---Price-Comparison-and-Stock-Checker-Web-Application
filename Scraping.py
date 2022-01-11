@@ -4,7 +4,8 @@ import re
 
 
 def findchipsscraper(partnumber):
-    html_text = requests.get(f'https://www.findchips.com/search/{partnumber}').text
+    url_partnumber = partnumber.replace('/', '%2F')
+    html_text = requests.get(f'https://www.findchips.com/search/{url_partnumber}').text
     soup = BeautifulSoup(html_text, 'lxml')
     parts = soup.find_all('div', class_='distributor-results')
 
@@ -34,4 +35,4 @@ def findchipsscraper(partnumber):
 
 if __name__ == '__main__':
 
-    findchipsscraper('ICF-308-T-O-TR')
+    findchipsscraper('M23269/01-3104')
