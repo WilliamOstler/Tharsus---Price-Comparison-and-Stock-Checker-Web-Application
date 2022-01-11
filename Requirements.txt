@@ -5,3 +5,6 @@ pandas
 flask-login
 SQLAlchemy
 Flask-SQLAlchemy
+bs4
+requests
+lxml
