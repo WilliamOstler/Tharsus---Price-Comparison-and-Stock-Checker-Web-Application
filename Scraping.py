@@ -4,35 +4,39 @@ import re
 
 
 def findchipsscraper(partnumber):
-    url_partnumber = partnumber.replace('/', '%2F')
+    url_partnumber = partnumber.replace('/', '%2F').replace(',', '%2C')
     html_text = requests.get(f'https://www.findchips.com/search/{url_partnumber}').text
     soup = BeautifulSoup(html_text, 'lxml')
-    parts = soup.find_all('div', class_='distributor-results')
+    distributors = soup.find_all('div', class_='distributor-results')
 
-    for part in parts:
-        stock = part.find('td', class_='td-stock').text
-        numeric_string = re.sub("[^0-9]", "", stock)
-        if int(numeric_string) != 0:
-            distributor = part.find('h3', class_='distributor-title').text.replace(' ', '').replace('\n', '')
-            price = part.find('td', class_='td-price').text.replace('$', '').replace(
-                '£', '').replace('€', '').replace('See More', '')
-            clean_price = ' '.join(price.split()).replace(' ', ',')
-            if clean_price != '':
-                price_for_quantity = tuple(map(float, clean_price.split(',')))
-                if len(price_for_quantity) != 2:
-                    res = tuple(price_for_quantity[n:n + 2] for n, i in enumerate(price_for_quantity)
-                                if n % 2 == 0)
-                    bomb = res
-                else:
-                    bomb = price_for_quantity
+    for distributor in distributors:
+        distributor_name = distributor.find('h3', class_='distributor-title').text.replace(' ', '').replace('\n', '')
+        for listing in distributor.find_all('tr', class_='row'):
+            stock = listing.find('td', class_='td-stock').text
+            numeric_string = re.sub("[^0-9]", "", stock)
 
-                print(f'''
-                    Distributor: {distributor}
-                    stock: {numeric_string}
-                    price for quantity: {bomb}
-                    ''')
+            if int(numeric_string) != 0:
+                price = listing.find('td', class_='td-price').text.replace('$', '').replace(
+                    '£', '').replace('€', '').replace('See More', '')
+                clean_price = ' '.join(price.split()).replace(' ', ',')
+                if clean_price != '':
+                    price_for_quantity = tuple(map(float, clean_price.split(',')))
+                    if len(price_for_quantity) != 2:
+                        res = tuple(price_for_quantity[n:n + 2] for n, i in enumerate(price_for_quantity)
+                                    if n % 2 == 0)
+                        bomb = res
+                    else:
+                        bomb = price_for_quantity
+
+                    print(f'''
+                                Distributor: {distributor_name}
+                                stock: {numeric_string}
+                                price for quantity: {bomb}
+                                ''')
+
+
 
 
 if __name__ == '__main__':
 
-    findchipsscraper('M23269/01-3104')
+    findchipsscraper('MPTC-02-80-02-6.30-01-L-V')
