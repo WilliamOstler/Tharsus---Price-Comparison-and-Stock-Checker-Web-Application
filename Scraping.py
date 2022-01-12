@@ -3,7 +3,7 @@ import requests
 import re
 
 
-def findchipsscraper(partnumber):
+def findchipsscraper(partnumber, quantity_required):
     url_partnumber = partnumber.replace('/', '%2F').replace(',', '%2C')
     html_text = requests.get(f'https://www.findchips.com/search/{url_partnumber}').text
     soup = BeautifulSoup(html_text, 'lxml')
@@ -15,7 +15,7 @@ def findchipsscraper(partnumber):
             stock = listing.find('td', class_='td-stock').text
             numeric_string = re.sub("[^0-9]", "", stock)
 
-            if int(numeric_string) != 0:
+            if int(numeric_string) != 0 and int(numeric_string) >= quantity_required:
                 price = listing.find('td', class_='td-price').text.replace('$', '').replace(
                     '£', '').replace('€', '').replace('See More', '')
                 clean_price = ' '.join(price.split()).replace(' ', ',')
@@ -39,4 +39,4 @@ def findchipsscraper(partnumber):
 
 if __name__ == '__main__':
 
-    findchipsscraper('MPTC-02-80-02-6.30-01-L-V')
+    findchipsscraper('MPTC-02-80-02-6.30-01-L-V', 100)
