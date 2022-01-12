@@ -1,6 +1,13 @@
 from bs4 import BeautifulSoup
 import requests
 import re
+def stringchecker(value):
+    try:
+        e = int(value)
+        result = e
+    except:
+        result = 0
+    return result
 
 
 def findchipsscraper(partnumber, quantity_required):
@@ -15,7 +22,7 @@ def findchipsscraper(partnumber, quantity_required):
             stock = listing.find('td', class_='td-stock').text
             numeric_string = re.sub("[^0-9]", "", stock)
 
-            if int(numeric_string) != 0 and int(numeric_string) >= quantity_required:
+            if stringchecker(numeric_string) != 0 and stringchecker(numeric_string) >= quantity_required:
                 price = listing.find('td', class_='td-price').text.replace('$', '').replace(
                     '£', '').replace('€', '').replace('See More', '')
                 clean_price = ' '.join(price.split()).replace(' ', ',')
@@ -30,9 +37,11 @@ def findchipsscraper(partnumber, quantity_required):
 
                     print(f'''
                                 Distributor: {distributor_name}
+                                Part number: {partnumber}
                                 stock: {numeric_string}
                                 price for quantity: {bomb}
                                 ''')
+
 
 
 

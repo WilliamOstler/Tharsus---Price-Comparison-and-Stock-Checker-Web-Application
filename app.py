@@ -3,6 +3,7 @@ from flask import Flask, render_template, request, send_file
 from pandas import read_excel
 from flask_sqlalchemy import SQLAlchemy
 import os
+from Scraping import findchipsscraper
 
 
 UPLOAD_FOLDER = 'uploads/'
@@ -26,13 +27,17 @@ def output():
             columnNames = db.columns
             columnNames = columnNames.to_list()
             data = db.values
+            for i in data:
+                findchipsscraper(i[0], i[1])
             return render_template("output.html", columnNames=columnNames, data=data, fileName=fileName)
 
         elif request.form.get("newData"):
             fileName = request.form.get("fileName")
             price = 10 #a random number to see if it works
             db = read_excel("./"+UPLOAD_FOLDER+"/"+fileName)
+
             db['Cost'] = db['Quantity needed'] * price #price should be scraped from the website
+            print(findchipsscraper(db['Part name'], db['Quantity needed']))
             columnNames = db.columns
             columnNames = columnNames.to_list()
             data = db.values
