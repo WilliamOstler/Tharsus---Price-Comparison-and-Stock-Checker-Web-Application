@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tharsus Price App</title>
+    <link rel="stylesheet" href="https://tharsus.co.uk/sites/default/files/css/css_yWDqw7ij3kwIgDNG-0qkWn7ZlTPnoG7cSDfX9iN2XdI.css" />
+</head>
+
+<body>
+
+    <style>
+        body{
+            text-align : center;
+            color : white;
+        }
+        h1{
+            padding-top: 200px;
+            font-size: 64px;
+        }
+        .table {
+        margin-left: auto;
+        margin-right: auto;
+        }
+        a:link{
+            color : white;
+            padding-right: 20px;
+            padding-left: 20px;
+        }
+
+        a:visited{
+            color : darkgray;
+            padding-right: 20px;
+            padding-left: 20px;
+        }
+    </style>
+
+    <section class="hero is-primary is-fullheight">
+
+        <div class="hero-head">
+            <nav class="navbar">
+                <div class="container">
+
+                    <div id="navbarMenuHeroA" class="navbar-menu">
+                       <div class="navbar-end">
+                            <a href="{{ url_for('index') }}" class="navbar-item">
+                               Home
+                            </a>
+                            <a href="{{ url_for('upload_file') }}" class="navbar-item">
+                                Upload
+                            </a>
+                           {% if current_user.is_authenticated %}
+                                <a href="{{ url_for('users.profile') }}" class="navbar-item">
+                                    Profile
+                                </a>
+                           {% endif %}
+                           {% if current_user.is_authenticated and current_user.role=='admin' %}
+                                <a href="{{ url_for('admin.admin') }}" class="navbar-item">
+                                    Admin
+                                </a>
+                           {% endif %}
+                           {% if not current_user.is_authenticated %}
+                                <a href="{{ url_for('users.login') }}" class="navbar-item">
+                                    Login
+                                </a>
+                                <a href="{{ url_for('users.register') }}" class="navbar-item">
+                                    Register
+                                </a>
+                           {% endif %}
+                           {% if current_user.is_authenticated %}
+                                 <a href="{{ url_for('users.account') }}" class="navbar-item">
+                                    Account
+                                </a>
+                                <a href="{{ url_for('users.logout') }}" class="navbar-item">
+                                    Log Out
+                                </a>
+                           {% endif %}
+
+                       </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <div class="hero-body">
+            <div class="container has-text-centered">
+               {% block content %}
+               {% endblock %}
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>
