@@ -32,50 +32,8 @@
         </br>
         </br>
         <div id="addData" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-
-              <!-- Modal content-->
-              <div class="modal-content">
-
-                <div class="modal-body">
-                  <p>
-                    <form  method='POST' action="/output" >
-                    <input type="hidden" name="fileName" value="{{ fileName }}" />
-
-                    <input type="submit" style="background: rgb(87, 87, 87); border-color: rgb(87, 87, 87);" class="btn btn-success " id="newData" name="newData" value="Submit"/>
-                  </form>
-                  </p>
-                </div>
-              </div>
-
             </div>
-          </div>
 
-        <table class="table__layout">
-        <thead>
-          <caption style="text-align: center; font-weight: bold;">{{ fileName }}</caption>
-        <tr class="table__columnName">
-            {% for columnName in columnNames %}
-            <th class="table__cell">{{ columnName }}</th>
-            {% endfor %}
-        </tr>
-        </thead>
-        <tbody>
-        {% for row in data %}
-        <tr class="table__row">
-            {% for cell in row %}
-            <td class="table__cell">{{ cell }}</td>
-            {% endfor %}
-        </tr>
-        {% endfor %}
-        </tbody>
-        </table>
-
-        <div style="background-color:rgb(255, 255, 255); height:20%; text-align: center;">
-            <button type="submit"  style="margin: 60px 0px 10px 10px; background: rgb(87, 87, 87); border-color: rgb(87, 87, 87);" class="btn btn-info" data-toggle="modal" data-target="#addData">Calculate price</button>
-            <a href="/" target="blank"><button type="submit"  style="margin: 60px 0px 10px 10px; background: rgb(87, 87, 87); border-color: rgb(87, 87, 87);" class="btn btn-info" >Open another file</button></a>
-            <a href="/download/{{ fileName }}" target="blank"><button style="margin: 60px 0px 10px 10px; background: rgb(87, 87, 87); color: rgb(255, 255, 255);" class='btn  btn-basic'>Download file</button></a>
-        </div>
     </body>
 
   </html>
