@@ -32,7 +32,7 @@ UPLOAD_FOLDER = 'uploads'
 
 # CONFIG
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///lottery.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://csc2033_team36:Net8BondSaps@cs-db.ncl.ac.uk:3306/csc2033_team36'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'LongAndRandomSecretKey'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -155,4 +155,4 @@ if __name__ == "__main__":
     app.register_blueprint(users_blueprint)
     app.register_blueprint(admin_blueprint)
 
-    app.run(host=my_host, port=free_port, debug=True, ssl_context=('cert.pem', 'key.pem'))
+    app.run(host=my_host, port=free_port, debug=True)
