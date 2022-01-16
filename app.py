@@ -6,27 +6,8 @@ from functools import wraps
 from flask import Flask, render_template, request, redirect, flash, url_for
 from flask_login import LoginManager, current_user
 from flask_sqlalchemy import SQLAlchemy
-from flask_talisman import Talisman
-
-
-# LOGGING
 from werkzeug.utils import secure_filename
 
-
-class SecurityFilter(logging.Filter):
-    def filter(self, record):
-        return "SECURITY" in record.getMessage()
-
-
-fh = logging.FileHandler('lottery.log', 'w')
-fh.setLevel(logging.WARNING)
-fh.addFilter(SecurityFilter())
-formatter = logging.Formatter('%(asctime)s : %(message)s', '%m/%d/%Y %I:%M:%S %p')
-fh.setFormatter(formatter)
-
-logger = logging.getLogger('')
-logger.propagate = False
-logger.addHandler(fh)
 
 UPLOAD_FOLDER = 'uploads'
 
@@ -39,8 +20,6 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # initialise database
 db = SQLAlchemy(app)
-
-# SECURITY HEADERS
 
 
 # FUNCTIONS
@@ -71,6 +50,7 @@ def index():
         return render_template('index.html', firstname=current_user.firstname, id=current_user.id)
     else:
         return render_template('index.html')
+
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload_file():
