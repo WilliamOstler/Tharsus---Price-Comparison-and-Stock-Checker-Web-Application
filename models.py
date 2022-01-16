@@ -36,16 +36,18 @@ class Results(db.Model):
 
     __tablename__ = 'Results'
 
+    source = db.Column(db.VARCHAR(8), primary_key=True)
     partnumber = db.Column(db.VARCHAR(100), primary_key=True)
-    supplier = db.ForeignKey('Supplier.name00')
+    supplier = db.Column(db.VARCHAR(100), primary_key=True)
     stock = db.Column(db.Integer)
     stockrequired = db.Column(db.Integer)
-    priceperunit = db.Column(db.DECIMAL)
-    totalprice = db.Column(db.DECIMAL)
+    priceperunit = db.Column(db.Float)
+    totalprice = db.Column(db.Float)
     link = db.Column(db.VARCHAR(500))
     searchnumber = db.Column(db.Integer)
 
-    def __init__(self, partnumber, supplier, stock, stockrequired, priceperunit, totalprice, link):
+    def __init__(self, source, partnumber, supplier, stock, stockrequired, priceperunit, totalprice, link, searchnumber):
+        self.source = source
         self.partnumber = partnumber
         self.supplier = supplier
         self.stock = stock
@@ -53,5 +55,5 @@ class Results(db.Model):
         self.priceperunit = priceperunit
         self.totalprice = totalprice
         self.link = link
-
+        self.searchnumber = searchnumber
 
