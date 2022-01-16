@@ -5,12 +5,12 @@ from app import db
 
 
 class Part(db.Model):
-    __bind_key__ = 'parts'
+    __tablename__ = 'parts'
 
     part_id = db.Column(db.String(100), primary_key=True)
     part_number = db.Column(db.String(100))
     description = db.Column(db.String(200), primary_key=True)
-    distributor_name = db.Column(db.String(100))
+    distributor_name = db.Column(db.String(100), primary_key=True)
     stock = db.Column(db.Integer)
     prices = db.relationship('Price')
 
@@ -23,12 +23,14 @@ class Part(db.Model):
 
 
 class Price(db.Model):
-    __bind_key__ = 'prices'
-    part_id = db.Column(db.String(100), db.ForeignKey(Part.part_id), primary_key=True)
+    __tablename__ = 'prices'
+    listing_id = db.Column(db.Integer, primary_key=True)
+    part_id = db.Column(db.String(100), db.ForeignKey('parts.part_id'))
     quantity = db.Column(db.Integer)
     price = db.Column(db.Integer)
 
-    def __init__(self, part_id, quantity, price):
+    def __init__(self, listing_id, part_id, quantity, price):
+        self.listing_id = listing_id
         self.part_id = part_id
         self.quantity = quantity
         self.price = price
@@ -44,12 +46,13 @@ def stringchecker(value):
 
 
 def findchipsscraper(partnumber, quantity_required):
-    db.drop_all(bind='__all__')
-    db.create_all(bind='__all__')
+    db.drop_all()
+    db.create_all()
     url_partnumber = partnumber.replace('/', '%2F').replace(',', '%2C')
     html_text = requests.get(f'https://www.findchips.com/search/{url_partnumber}?currency=GBP').text
     soup = BeautifulSoup(html_text, 'lxml')
     distributors = soup.find_all('div', class_='distributor-results')
+    i = 0
 
     for distributor in distributors:
         distributor_name = distributor.find('h3', class_='distributor-title').text.replace(' ', '').replace('\n', '')
@@ -59,14 +62,15 @@ def findchipsscraper(partnumber, quantity_required):
 
             if stringchecker(numeric_string) != 0:
                 part_id = listing.find('td', class_='td-part first').text.replace(' ', '').replace('\n', '')
-                description = listing.find('td', class_='td-desc more').text.replace('\n', '')
-                part = Part(part_id, partnumber, stock, distributor_name, description)
+                description = listing.find('td', class_='td-desc more').text.replace('\n', '').replace('  ', '')
+                part = Part(part_id, partnumber, numeric_string, distributor_name, description)
                 db.session.add(part)
-                for price in listing.find_all('ul', class_='price-list'):
+                for x, price in enumerate(listing.find_all('ul', class_='price-list')):
                     quantity = price.find('span', class_='label').text.replace(' ', '')
                     value = price.find('span', class_='value').text.replace('£', '').replace(' ', '')
-                    price_per_quantity = Price(part_id, quantity, value)
+                    price_per_quantity = Price(i ,part_id, quantity, value)
                     db.session.add(price_per_quantity)
+                    i = i+1
 
                     print(f'''
                                 Distributor: {distributor_name}
@@ -80,4 +84,4 @@ def findchipsscraper(partnumber, quantity_required):
 
 
 if __name__ == '__main__':
-    findchipsscraper('TLV3702IDGKR', 30)
+    findchipsscraper('MPTC-02-80-02-6.30-01-L-V', 30)

@@ -8,11 +8,12 @@ import os
 UPLOAD_FOLDER = 'uploads/'
 app = Flask("excel-app")
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://csc2033_team36:Net8BondSaps@cs-db.ncl.ac.uk:3306/csc2033_team36'
-app.config['SQLALCHEMY_BINDS'] = {
-    'parts':        'mysql+mysqlconnector://csc2033_team36:Net8BondSaps@cs-db.ncl.ac.uk:3306/csc2033_team36/tables/parts',
-    'prices':      'mysql+mysqlconnector://csc2033_team36:Net8BondSaps@cs-db.ncl.ac.uk:3306/csc2033_team36/tables/prices'
-}
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://csc2033_team36:Net8BondSaps@cs-db.ncl.ac.uk:3306/csc2033_team36'
+#app.config['SQLALCHEMY_BINDS'] = {
+    #'parts':        'mysql+mysqlconnector://csc2033_team36:Net8BondSaps@cs-db.ncl.ac.uk:3306/csc2033_team36/tables/parts',
+    #'prices':      'mysql+mysqlconnector://csc2033_team36:Net8BondSaps@cs-db.ncl.ac.uk:3306/csc2033_team36/tables/prices'
+#}
 db = SQLAlchemy(app)
 
 
