@@ -61,6 +61,7 @@ class SearchOctopart:
 
         # Add the listings found to the database
         for listing in results:
+            print(f'Listing found: {listing}')
             DatabaseProcess.addRow(listing)
 
     # Format the results found from octopart from a JSON format into an Array format
@@ -86,7 +87,7 @@ class SearchOctopart:
             link = listing['offers'][0]['click_url']
 
             # Add data retrived to the formatted_results IF the supplier has enough stock
-            if stock >= self.quantity:
+            if stock > 0:
                 formatted_results.append(["Octopart", self.part_number, supplier, stock, self.quantity, part_cost,
                                           part_cost * self.quantity, link, self.searchID])
 
