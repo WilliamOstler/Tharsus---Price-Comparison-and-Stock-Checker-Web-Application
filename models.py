@@ -44,7 +44,7 @@ class Results(db.Model):
     priceperunit = db.Column(db.Float)
     totalprice = db.Column(db.Float)
     link = db.Column(db.VARCHAR(500))
-    searchnumber = db.Column(db.Integer)
+    searchnumber = db.Column(db.Integer, primary_key=True)
 
     def __init__(self, source, partnumber, supplier, stock, stockrequired, priceperunit, totalprice, link, searchnumber):
         self.source = source
@@ -56,4 +56,3 @@ class Results(db.Model):
         self.totalprice = totalprice
         self.link = link
         self.searchnumber = searchnumber
-
