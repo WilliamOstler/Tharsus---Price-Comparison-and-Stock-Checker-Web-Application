@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="MariaDB - csc2033_team36@cs-db.ncl.ac.uk" uuid="c7215809-f611-4b74-9ad5-b7e192c0e6ed">
+    <data-source source="LOCAL" name="csc2033_team36@tharsus.cyxylxr5iurl.eu-west-2.rds.amazonaws.com" uuid="f162ab5b-fe00-4247-a90b-0f96b99c4527">
       <driver-ref>mariadb</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.mariadb.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mariadb://cs-db.ncl.ac.uk:3306/csc2033_team36</jdbc-url>
+      <jdbc-url>jdbc:mariadb://tharsus.cyxylxr5iurl.eu-west-2.rds.amazonaws.com:3306/csc2033_team36</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>
