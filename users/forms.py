@@ -12,18 +12,13 @@ def character_check(form,field):
 
 
 class RegisterForm(FlaskForm):
-    email = StringField(validators=[Email()])
     firstname = StringField(validators=[character_check])
     lastname = StringField(validators=[character_check])
-    phone = StringField()
+    email = StringField(validators=[Email()])
     password = PasswordField(validators=[Length(min=6, max=12, message='Password must be betweem 6 and 12 characters in length')])
     confirm_password = PasswordField(validators=[EqualTo('password', message='Both password fields must be equal')])
     submit = SubmitField()
 
-    def validate_phone(self, phone):
-        p = re.compile(r'\d{4}-\d{3}-\d{4}')
-        if not p.match(self.phone.data):
-            raise ValidationError("Phone Number must be in format XXXX-XXX-XXXX")
 
     def validate_password(self, password):
         pw = re.compile(r'(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,}')

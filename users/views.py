@@ -35,10 +35,9 @@ def register():
         # create a new user with the form data
         new_user = User(email=form.email.data,
                         firstname=form.firstname.data,
-                        lastname=form.lastname.data,
-                        phone=form.phone.data,
+                        surname=form.lastname.data,
                         password=form.password.data,
-                        role='user')
+                        admin=0)
 
         # add the new user to the database
         db.session.add(new_user)

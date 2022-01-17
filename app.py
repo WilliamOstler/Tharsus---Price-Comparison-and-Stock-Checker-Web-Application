@@ -32,7 +32,7 @@ UPLOAD_FOLDER = 'uploads'
 
 # CONFIG
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://csc2033_team36:Net8BondSaps@cs-db.ncl.ac.uk:3306/csc2033_team36'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://csc2033_team36:Net8BondSaps@tharsus.cyxylxr5iurl.eu-west-2.rds.amazonaws.com:3306/csc2033_team36'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'LongAndRandomSecretKey'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
