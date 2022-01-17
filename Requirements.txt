@@ -18,3 +18,8 @@ WTForms
 cryptography
 Flask-WTF
 email-validator
+pandas
+SQLAlchemy
+bs4
+requests
+lxml

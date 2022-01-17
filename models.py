@@ -1,5 +1,4 @@
 from app import db
-
 class User(db.Model):
 
     __tablename__ = 'User'
@@ -55,4 +54,3 @@ class Results(db.Model):
         self.totalprice = totalprice
         self.link = link
         self.searchnumber = searchnumber
-        
