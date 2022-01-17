@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="title">Tharsus Price Checker
+</h1>
+
+{% if current_user.is_authenticated %}
+    <p>
+        {{ firstname }} ('{{ id }}')
+    </p>
+{% endif %}
+
+{% endblock %}

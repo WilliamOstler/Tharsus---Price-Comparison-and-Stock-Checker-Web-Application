@@ -3,7 +3,6 @@ from flask_login import current_user, login_required
 from app import db
 from Supplier import Supplier
 
-
 admin_blueprint = Blueprint('admin', __name__, template_folder='templates')
 
 
@@ -39,6 +38,3 @@ def add_supplier_to_favourites():
 
     flash("New favourite supplier added")
     return admin()
-
-
-
