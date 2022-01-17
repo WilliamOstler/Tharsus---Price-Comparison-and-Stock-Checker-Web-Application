@@ -10,8 +10,7 @@ class User(db.Model):
     surname = db.Column(db.VARCHAR(100))
     admin = db.Column(db.Boolean)
 
-    def __init__(self, id, email, password, firstname, surname, admin):
-        self.id = id
+    def __init__(self, email, password, firstname, surname, admin):
         self.email = email
         self.password = password
         self.firstname = firstname
@@ -56,3 +55,4 @@ class Results(db.Model):
         self.totalprice = totalprice
         self.link = link
         self.searchnumber = searchnumber
+        
