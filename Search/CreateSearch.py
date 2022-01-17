@@ -14,7 +14,7 @@ BOM = [['AT0603FRE0747KL', 3],
        ['IPB017N10N5LF', 6],
        ['TCAN1051HVDR', 4],
        ['STM32F427IIT6', 4],
-       ['TLV3702IDGKR', 2]]
+       ['AG1012F', 100]]
 
 
 # Retrieve respected SearchID to use for this search
@@ -28,7 +28,7 @@ for parts in BOM:
 
     # Retrieve the partnumber and quantity for the current BOM item.
     partnumber = parts[0]
-    quantity = parts[1]
+    quantity = parts[1]*BOMQuantity
 
     # Search Octopart for the part
     octopart = SearchOctopart(partnumber, quantity, searchID)
@@ -40,7 +40,7 @@ for parts in BOM:
 
 
 # Filter the Results retrieved, so the best combination of suppliers are found
-DatabaseProcess.filterResults(searchID)
+DatabaseProcess.filterResults(searchID, BOM)
 
 # Convert the results to an Excel format
 #searchResults = convertToExcel()
