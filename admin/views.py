@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, flash
 from flask_login import current_user, login_required
 from app import db
-from Supplier import Supplier
+from models import Supplier
 
 admin_blueprint = Blueprint('admin', __name__, template_folder='templates')
 
