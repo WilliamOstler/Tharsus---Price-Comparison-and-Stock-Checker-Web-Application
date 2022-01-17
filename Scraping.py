@@ -14,7 +14,7 @@ def stringchecker(value):
     return result
 
 
-results = []
+results=[]
 
 
 def findchipsscraper(partnumber, quantity_required):
@@ -48,4 +48,6 @@ def findchipsscraper(partnumber, quantity_required):
 
 
 if __name__ == '__main__':
-    print(findchipsscraper('ICF-308-T-O-TR', 500))
+    for x in findchipsscraper('ICF-308-T-O-TR', 500):
+        print(x)
+

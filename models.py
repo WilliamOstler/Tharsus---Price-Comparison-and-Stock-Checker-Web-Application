@@ -1,4 +1,6 @@
 from app import db
+
+
 class Results(db.Model):
 
     __tablename__ = 'Results'
@@ -23,5 +25,6 @@ class Results(db.Model):
         self.totalprice = totalprice
         self.link = link
         self.searchnumber = searchnumber
+
     def __str__(self):
         return self.priceperunit
