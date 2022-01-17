@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 import re
 from models import Results
+from Search import DatabaseProcess
 
 
 
@@ -14,10 +15,9 @@ def stringchecker(value):
     return result
 
 
-results=[]
 
 
-def findchipsscraper(partnumber, quantity_required):
+def findchipsscraper(partnumber, quantity_required, searchID):
     url_partnumber = partnumber.replace('/', '%2F').replace(',', '%2C')
     html_text = requests.get(f'https://www.findchips.com/search/{url_partnumber}?currency=GBP').text
     soup = BeautifulSoup(html_text, 'lxml')
@@ -29,7 +29,9 @@ def findchipsscraper(partnumber, quantity_required):
     part_source = 'Findchips'
 
     for distributor in distributors:
-        distributor_name = distributor.find('h3', class_='distributor-title').text.replace(' ', '').replace('\n', '')
+        distributor_name = distributor.find('h3', class_='distributor-title').text.replace(' ', '').replace('\n', '').\
+            replace(
+            '\xC2','').replace('\x95', '').replace('ECIA(NEDA)MemberAuthorizedDistributor','')
         for listing in distributor.find_all('tr', class_='row'):
             stock = listing.find('td', class_='td-stock').text
             numeric_string = re.sub("[^0-9]", "", stock)
@@ -41,13 +43,10 @@ def findchipsscraper(partnumber, quantity_required):
                     quantity = price.find('span', class_='label').text
                     value = price.find('span', class_='value').text.replace('£','')
                     if int(quantity) <= quantity_required:
-                        result = Results(part_source, partnumber, distributor_name, numeric_string, quantity_required, value, float(value)*quantity_required,link, '1' )
-                        results.append(result)
+                        result = [part_source, partnumber, part_id, distributor_name, numeric_string, quantity_required,
+                                         float(value), float(value)*quantity_required,link, searchID]
+                        DatabaseProcess.addRow(result)
 
-    return results
 
 
-if __name__ == '__main__':
-    for x in findchipsscraper('ICF-308-T-O-TR', 500):
-        print(x)
 
