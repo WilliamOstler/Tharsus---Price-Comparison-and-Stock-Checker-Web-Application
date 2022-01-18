@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, flash
 from flask_login import current_user, login_required
 from app import db
-from models import Supplier
+from models import Supplier, User
 
 admin_blueprint = Blueprint('admin', __name__, template_folder='templates')
 
@@ -12,29 +12,82 @@ def admin():
     return render_template('admin.html')
 
 
-@admin_blueprint.route('/add_supplier_to_blacklist', methods=['POST'])
+@admin_blueprint.route('/view_suppliers_Preferences', methods=['POST'])
 @login_required
-#@requires_roles('admin')
-def add_supplier_to_blacklist():
+def view_suppliers_Preferences():
+    return render_template('admin.html', suppliers=Supplier.query.all())
 
 
+@admin_blueprint.route('/view_users', methods=['POST'])
+@login_required
+def view_all_users():
+    return render_template('admin.html', users=User.query.filter_by(role='user').all())
 
-    blacklistedSupplier = request.form.get("name")
-    newBlacklistedSupplier = Supplier(name=blacklistedSupplier)
 
-    db.session.add(newBlacklistedSupplier)
-    db.session.commit()
+@admin_blueprint.route('/remove_user', methods=['POST'])
+@login_required
+def remove_user():
+    user = request.form.get('remove_user')
 
-    flash("New blacklisted supplier added")
+    if len((User.query.filter_by(id=user).all())) == 0:
+        flash(f"No preference registered for {user}")
+    else:
+        User.query.filter_by(id=user).delete()
+        db.session.commit()
+
+    flash("user Removed")
     return admin()
 
-def add_supplier_to_favourites():
 
-    favouriteSupplier = request.form.get("name")
-    newFavouriteSupplier = Supplier(name=favouriteSupplier)
+@admin_blueprint.route('/blacklist_supplier', methods=['POST'])
+@login_required
+def blacklist_supplier():
+    blacklist = request.form.get('blacklisted_supplier')
 
-    db.session.add(newFavouriteSupplier)
-    db.session.commit()
+    if len((Supplier.query.filter_by(name=blacklist).all())) == 0:
+        new_blacklist = Supplier(blacklist, 1, 0)
+        db.session.add(new_blacklist)
+        db.session.commit()
+    else:
+        Supplier.query.filter_by(name=blacklist).delete()
+        new_blacklist = Supplier(blacklist, 1, 0)
+        db.session.add(new_blacklist)
+        db.session.commit()
 
-    flash("New favourite supplier added")
+    flash("Supplier Blacklisted")
+    return admin()
+
+
+@admin_blueprint.route('/favourite_supplier', methods=['POST'])
+@login_required
+def favourite_supplier():
+    favourite = request.form.get('favourite_supplier')
+    print(favourite)
+
+    if len((Supplier.query.filter_by(name=favourite).all())) == 0:
+        new_favourite = Supplier(favourite, 0, 1)
+        db.session.add(new_favourite)
+        db.session.commit()
+    else:
+        Supplier.query.filter_by(name=favourite).delete()
+        new_favourite = Supplier(favourite, 0, 1)
+        db.session.add(new_favourite)
+        db.session.commit()
+
+    flash("Supplier Favourited")
+    return admin()
+
+
+@admin_blueprint.route('/remove_preference', methods=['POST'])
+@login_required
+def remove_preference():
+    supplier = request.form.get('remove_preference')
+
+    if len((Supplier.query.filter_by(name=supplier).all())) == 0:
+        flash(f"No preference registered for {supplier}")
+    else:
+        Supplier.query.filter_by(name=supplier).delete()
+        db.session.commit()
+
+    flash("Preference Removed")
     return admin()
