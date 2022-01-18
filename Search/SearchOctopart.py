@@ -1,5 +1,5 @@
 import requests
-import DatabaseProcess
+from Search import DatabaseProcess
 
 
 class SearchOctopart:
