@@ -1,15 +1,17 @@
 # IMPORTS
 import logging
-import pyotp
 from datetime import datetime
-from flask import Blueprint, render_template, flash, redirect, url_for,session, request
+from flask import Blueprint, render_template, flash, redirect, url_for, session, request, send_file
 from flask_login import current_user, login_user, logout_user
 from werkzeug.security import check_password_hash
-
+import os
 from admin.views import admin
-from app import db
+from app import db, UPLOAD_FOLDER, app
 from models import User
 from users.forms import RegisterForm, LoginForm
+from pandas import read_excel
+from werkzeug.utils import secure_filename
+from Search import CreateSearch
 
 # CONFIG
 users_blueprint = Blueprint('users', __name__, template_folder='templates')
@@ -110,6 +112,30 @@ def login():
 def profile():
     return render_template('profile.html', name=current_user.firstname)
 
+
+@users_blueprint.route('/upload', methods=['GET', 'POST'])
+def upload_file():
+    if request.method == 'POST':
+        # check if the post request has the file part
+        if 'file' not in request.files:
+            flash('No file part')
+            return redirect(request.url)
+        file = request.files['file']
+        # If the user does not select a file, the browser submits an
+        # empty file without a filename.
+        if file.filename == '':
+            flash('No selected file')
+            return redirect(request.url)
+        if file:
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            db = read_excel("./" + UPLOAD_FOLDER + "/" + filename, skiprows = 4)
+            data = db.values
+            search = CreateSearch.search(data, CreateSearch.get_search_id())
+
+            path = f'/Users/williamostler/Desktop/University/Stage 2/CSC2033 - Software Engineering Team Project/PriceComparisonStockChecker/SearchResults/BOMSearch{search}results.xlsx'
+            return send_file(path, as_attachment=True)
+    return render_template('upload.html')
 
 
 # view user account

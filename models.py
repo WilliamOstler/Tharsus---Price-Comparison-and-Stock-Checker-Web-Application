@@ -3,8 +3,8 @@ from flask_login import UserMixin
 from app import db
 from werkzeug.security import generate_password_hash
 
-class User(db.Model, UserMixin):
 
+class User(db.Model, UserMixin):
     __tablename__ = 'User'
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.VARCHAR(100))
@@ -38,19 +38,21 @@ class Results(db.Model):
 
     __tablename__ = 'Results'
 
-    source = db.Column(db.VARCHAR(8), primary_key=True)
+    source = db.Column(db.VARCHAR(10), primary_key=True)
     partnumber = db.Column(db.VARCHAR(100), primary_key=True)
+    alternate_partnumber = db.Column(db.VARCHAR(100), primary_key=True)
     supplier = db.Column(db.VARCHAR(100), primary_key=True)
     stock = db.Column(db.Integer)
     stockrequired = db.Column(db.Integer)
-    priceperunit = db.Column(db.Float)
+    priceperunit = db.Column(db.Float, primary_key=True)
     totalprice = db.Column(db.Float)
-    link = db.Column(db.VARCHAR(500))
+    link = db.Column(db.VARCHAR(2000))
     searchnumber = db.Column(db.Integer, primary_key=True)
 
-    def __init__(self, source, partnumber, supplier, stock, stockrequired, priceperunit, totalprice, link, searchnumber):
+    def __init__(self, source, partnumber, alternate_partnumber, supplier, stock, stockrequired, priceperunit, totalprice, link, searchnumber):
         self.source = source
         self.partnumber = partnumber
+        self.alternate_partnumber = alternate_partnumber
         self.supplier = supplier
         self.stock = stock
         self.stockrequired = stockrequired
@@ -58,4 +60,6 @@ class Results(db.Model):
         self.totalprice = totalprice
         self.link = link
         self.searchnumber = searchnumber
-        
+
+
+db.create_all()

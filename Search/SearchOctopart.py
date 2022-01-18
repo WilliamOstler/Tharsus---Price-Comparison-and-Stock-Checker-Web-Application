@@ -1,5 +1,5 @@
 import requests
-import DatabaseProcess
+from Search import DatabaseProcess
 
 
 class SearchOctopart:
@@ -20,14 +20,14 @@ class SearchOctopart:
             headers={
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                'token': 'd5a2518a-5e6d-411f-abf5-4b0640a30153'
+                'token': '04c50e63-6c02-4797-9df5-5db1cb7d2b2e'
             },
 
             # GraphQL query
             json={
                 'query': '''
-                query Search($q: String!) { 
-                    search_mpn(q: $q) { 
+                query Search($q: String!, $currency: String!) { 
+                    search_mpn(q: $q, currency: $currency) { 
                         results { 
                             part { 
                                 sellers {
@@ -51,7 +51,8 @@ class SearchOctopart:
                 ''',
 
                 'variables': {
-                    'q': '%s' % self.part_number
+                    'q': f'{self.part_number}',
+                    'currency': 'GBP'
                 },
             },
         )
@@ -61,7 +62,6 @@ class SearchOctopart:
 
         # Add the listings found to the database
         for listing in results:
-            print(f'Listing found: {listing}')
             DatabaseProcess.addRow(listing)
 
     # Format the results found from octopart from a JSON format into an Array format
@@ -88,7 +88,7 @@ class SearchOctopart:
 
             # Add data retrived to the formatted_results IF the supplier has enough stock
             if stock > 0:
-                formatted_results.append(["Octopart", self.part_number, supplier, stock, self.quantity, part_cost,
-                                          part_cost * self.quantity, link, self.searchID])
+                formatted_results.append(["Octopart", self.part_number, self.part_number, supplier, stock,
+                                          self.quantity, part_cost, part_cost * self.quantity, link, self.searchID])
 
         return formatted_results
