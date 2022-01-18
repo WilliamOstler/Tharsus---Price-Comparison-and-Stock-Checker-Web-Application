@@ -1,9 +1,8 @@
 from sqlalchemy import func
-from app import db
 from models import Results
-from SearchOctopart import SearchOctopart
-import DatabaseProcess
-from Scraping import findchipsscraper
+from app import db
+from Search.FindChipsScraping import findchipsscraper
+
 
 
 # TODO: This is sample data, this data will be retrieved from the Excel BOM once complete.
@@ -18,33 +17,38 @@ BOM = [['AT0603FRE0747KL', 3],
 
 
 # Retrieve respected SearchID to use for this search
-if db.session.query(Results).count() == 0:
-    searchID = 1
-else:
-    searchID = int(db.session.query(func.max(Results.searchnumber)).scalar()) + 1
+def get_search_id():
+    if db.session.query(Results).count() == 0:
+        searchID = 1
+        return searchID
+    else:
+        searchID = int(db.session.query(func.max(Results.searchnumber)).scalar()) + 1
+        return searchID
+
+
 
 # Loop for all items in the BOM
-for parts in BOM:
-
+def search(data,searchID):
+  for parts in data:
     # Retrieve the partnumber and quantity for the current BOM item.
     partnumber = parts[0]
-    quantity = parts[1]*BOMQuantity
+    quantity = parts[1] * BOMQuantity
 
     # Search Octopart for the part
-    #octopart = SearchOctopart(partnumber, quantity, searchID)
-    #octopart.searchParts()
+    # octopart = SearchOctopart(partnumber, quantity, searchID)
+    # octopart.searchParts()
 
     # Search FindCips for the part
     findchipsscraper(partnumber, quantity, searchID)
-    #findchips = SearchFindChips(partnumber, quantity, searchID)
-    #findchips.searchParts()
+    # findchips = SearchFindChips(partnumber, quantity, searchID)
+    # findchips.searchParts()
 
+    # Filter the Results retrieved, so the best combination of suppliers are found
+    # DatabaseProcess.filterResults(searchID, BOM)
 
-# Filter the Results retrieved, so the best combination of suppliers are found
-#DatabaseProcess.filterResults(searchID, BOM)
+    # Convert the results to an Excel format
+    # searchResults = convertToExcel()
 
-# Convert the results to an Excel format
-#searchResults = convertToExcel()
 
 
 

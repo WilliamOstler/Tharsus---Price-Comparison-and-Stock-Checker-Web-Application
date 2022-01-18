@@ -4,6 +4,7 @@ import re
 from Search import DatabaseProcess
 
 
+
 def stringchecker(value):
     try:
         e = int(value)
@@ -28,7 +29,8 @@ def findchipsscraper(partnumber, quantity_required, searchID):
         distributor_name = distributor.find('h3', class_='distributor-title').text.replace(' ', '').replace('\n', '').\
             replace(
             '\xC2','').replace('\x95', '').replace('ECIA(NEDA)MemberAuthorizedDistributor','').\
-            replace('AuthorizedDistributor','')
+          replace('AuthorizedDistributor','')
+
         for listing in distributor.find_all('tr', class_='row'):
             stock = listing.find('td', class_='td-stock').text
             numeric_string = re.sub("[^0-9]", "", stock)
@@ -43,6 +45,3 @@ def findchipsscraper(partnumber, quantity_required, searchID):
                         result = [part_source, partnumber, part_id, distributor_name, numeric_string, quantity_required,
                                          float(value), float(value)*quantity_required,link, searchID]
                         DatabaseProcess.addRow(result)
-
-
-
