@@ -20,7 +20,7 @@ class SearchOctopart:
             headers={
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                'token': 'd5a2518a-5e6d-411f-abf5-4b0640a30153'
+                'token': '04c50e63-6c02-4797-9df5-5db1cb7d2b2e'
             },
 
             # GraphQL query
