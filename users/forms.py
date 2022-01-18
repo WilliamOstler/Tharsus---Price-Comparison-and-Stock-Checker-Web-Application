@@ -1,7 +1,7 @@
 import re
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField
-from wtforms.validators import Email, Length, EqualTo, ValidationError
+from wtforms.validators import Email, Length, EqualTo, ValidationError, DataRequired
 
 def character_check(form,field):
     excluded_chars = "*?!'^+%&/()=}][{$#@<>"
@@ -14,9 +14,9 @@ def character_check(form,field):
 class RegisterForm(FlaskForm):
     firstname = StringField(validators=[character_check])
     lastname = StringField(validators=[character_check])
-    email = StringField(validators=[Email()])
-    password = PasswordField(validators=[Length(min=6, max=12, message='Password must be betweem 6 and 12 characters in length')])
-    confirm_password = PasswordField(validators=[EqualTo('password', message='Both password fields must be equal')])
+    email = StringField(validators=[DataRequired(), Email()])
+    password = PasswordField(validators=[DataRequired(), Length(min=6, max=12, message='Password must be betweem 6 and 12 characters in length')])
+    confirm_password = PasswordField(validators=[DataRequired(), EqualTo('password', message='Both password fields must be equal')])
     submit = SubmitField()
 
 
@@ -27,7 +27,6 @@ class RegisterForm(FlaskForm):
 
 
 class LoginForm(FlaskForm):
-    email = StringField(validators=[Email()])
-    password = PasswordField()
-    pin = StringField()
+    email = StringField(validators=[DataRequired(), Email()])
+    password = PasswordField(validators=[DataRequired()])
     submit = SubmitField()

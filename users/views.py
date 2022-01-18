@@ -37,7 +37,7 @@ def register():
                         firstname=form.firstname.data,
                         surname=form.lastname.data,
                         password=form.password.data,
-                        admin=0)
+                        role='user')
 
         # add the new user to the database
         db.session.add(new_user)
@@ -89,18 +89,18 @@ def login():
 
         login_user(user)
 
-        user.last_logged_in = user.current_logged_in
+        # user.last_logged_in = user.current_logged_in
         user.current_logged_in = datetime.now()
         db.session.add(user)
         db.session.commit()
 
         logging.warning('SECURITY - Log in [%s, %s, %s]', current_user.id, current_user.email, request.remote_addr)
 
-        if current_user.role == 'admin':
-            return admin()
+        if current_user.role == 'user':
+            return redirect(url_for('users.profile'))
 
         else:
-            return profile()
+            return redirect(url_for('admin.admin'))
 
     return render_template('login.html', form=form)
 
@@ -119,8 +119,7 @@ def account():
                            acc_no=current_user.id,
                            email=current_user.email,
                            firstname=current_user.firstname,
-                           lastname=current_user.lastname,
-                           phone=current_user.phone)
+                           surname=current_user.surname)
 
 @users_blueprint.route('/logout')
 def logout():
