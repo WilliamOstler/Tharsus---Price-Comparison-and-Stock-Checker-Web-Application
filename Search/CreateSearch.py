@@ -2,7 +2,8 @@ from sqlalchemy import func
 from models import Results
 from app import db
 from Search.FindChipsScraping import findchipsscraper
-
+from Search.SearchOctopart import SearchOctopart
+from Search import DatabaseProcess
 
 
 # TODO: This is sample data, this data will be retrieved from the Excel BOM once complete.
@@ -29,22 +30,20 @@ def get_search_id():
 
 # Loop for all items in the BOM
 def search(data,searchID):
-  for parts in data:
+    for parts in data:
     # Retrieve the partnumber and quantity for the current BOM item.
-    partnumber = parts[0]
-    quantity = parts[1] * BOMQuantity
+        partnumber = parts[0]
+        quantity = parts[1] * BOMQuantity
 
     # Search Octopart for the part
-    # octopart = SearchOctopart(partnumber, quantity, searchID)
-    # octopart.searchParts()
+        octopart = SearchOctopart(partnumber, quantity, searchID)
+        octopart.searchParts()
 
     # Search FindCips for the part
-    findchipsscraper(partnumber, quantity, searchID)
-    # findchips = SearchFindChips(partnumber, quantity, searchID)
-    # findchips.searchParts()
+        findchipsscraper(partnumber, quantity, searchID)
 
     # Filter the Results retrieved, so the best combination of suppliers are found
-    # DatabaseProcess.filterResults(searchID, BOM)
+    DatabaseProcess.filterResults(searchID, BOM)
 
     # Convert the results to an Excel format
     # searchResults = convertToExcel()
