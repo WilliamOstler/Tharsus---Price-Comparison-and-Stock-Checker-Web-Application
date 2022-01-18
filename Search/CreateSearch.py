@@ -7,16 +7,7 @@ from Search import DatabaseProcess
 from Search import ExcelProcess
 
 
-# TODO: This is sample data, this data will be retrieved from the Excel BOM once complete.
 BOMQuantity = 5
-BOM = [['AT0603FRE0747KL', 3],
-       ['TLV3702IDGKR', 20],
-       ['SMCJ51A-E3/57T', 2],
-       ['IPB017N10N5LF', 6],
-       ['TCAN1051HVDR', 4],
-       ['STM32F427IIT6', 4],
-       ['AG1012F', 100]]
-
 
 # Retrieve respected SearchID to use for this search
 def get_search_id():
