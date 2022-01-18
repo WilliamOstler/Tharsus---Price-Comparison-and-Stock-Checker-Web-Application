@@ -1,6 +1,5 @@
 # IMPORTS
 import logging
-import pyotp
 from datetime import datetime
 from flask import Blueprint, render_template, flash, redirect, url_for, session, request, send_file
 from flask_login import current_user, login_user, logout_user
@@ -134,7 +133,7 @@ def upload_file():
             data = db.values
             search = CreateSearch.search(data, CreateSearch.get_search_id())
 
-            path = f'/Users/williamostler/Desktop/University/Stage 2/CSC2033 - Software Engineering Team Project/PriceComparisonStockChecker/BOMSearch{search}results.xlsx'
+            path = f'/Users/williamostler/Desktop/University/Stage 2/CSC2033 - Software Engineering Team Project/PriceComparisonStockChecker/SearchResults/BOMSearch{search}results.xlsx'
             return send_file(path, as_attachment=True)
     return render_template('upload.html')
 
