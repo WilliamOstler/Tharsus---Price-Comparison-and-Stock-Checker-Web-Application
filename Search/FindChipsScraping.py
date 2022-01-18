@@ -14,8 +14,6 @@ def stringchecker(value):
     return result
 
 
-
-
 def findchipsscraper(partnumber, quantity_required, searchID):
     url_partnumber = partnumber.replace('/', '%2F').replace(',', '%2C')
     html_text = requests.get(f'https://www.findchips.com/search/{url_partnumber}?currency=GBP').text
@@ -30,7 +28,9 @@ def findchipsscraper(partnumber, quantity_required, searchID):
     for distributor in distributors:
         distributor_name = distributor.find('h3', class_='distributor-title').text.replace(' ', '').replace('\n', '').\
             replace(
-            '\xC2','').replace('\x95', '').replace('ECIA(NEDA)MemberAuthorizedDistributor','')
+            '\xC2','').replace('\x95', '').replace('ECIA(NEDA)MemberAuthorizedDistributor','').\
+          replace('AuthorizedDistributor','')
+
         for listing in distributor.find_all('tr', class_='row'):
             stock = listing.find('td', class_='td-stock').text
             numeric_string = re.sub("[^0-9]", "", stock)
@@ -45,7 +45,3 @@ def findchipsscraper(partnumber, quantity_required, searchID):
                         result = [part_source, partnumber, part_id, distributor_name, numeric_string, quantity_required,
                                          float(value), float(value)*quantity_required,link, searchID]
                         DatabaseProcess.addRow(result)
-
-
-
-

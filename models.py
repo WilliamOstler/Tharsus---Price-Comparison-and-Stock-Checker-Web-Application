@@ -6,7 +6,7 @@ class User(db.Model):
     __tablename__ = 'User'
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.VARCHAR(100))
-    password = db.Column(db.VARCHAR(100))
+    password = db.Column(db.VARCHAR(255))
     firstname = db.Column(db.VARCHAR(100))
     surname = db.Column(db.VARCHAR(100))
     admin = db.Column(db.Boolean)
@@ -58,4 +58,3 @@ class Results(db.Model):
         self.totalprice = totalprice
         self.link = link
         self.searchnumber = searchnumber
-db.create_all()
