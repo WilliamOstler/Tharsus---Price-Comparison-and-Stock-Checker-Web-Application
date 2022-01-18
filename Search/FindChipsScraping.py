@@ -37,7 +37,7 @@ def findchipsscraper(partnumber, quantity_required, searchID):
 
             if stringchecker(numeric_string) != 0 and stringchecker(numeric_string) >= quantity_required:
                 part_id = listing.find('td', class_='td-part first').text.replace(' ', '').replace('\n', '')
-                link = listing.td.div.a['href']
+                link = f"https:{listing.td.div.a['href']}"
                 for price in listing.find_all('li'):
                     quantity = price.find('span', class_='label').text
                     value = price.find('span', class_='value').text.replace('£','')
