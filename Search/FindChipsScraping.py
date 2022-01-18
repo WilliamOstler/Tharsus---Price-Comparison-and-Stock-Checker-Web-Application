@@ -29,7 +29,7 @@ def findchipsscraper(partnumber, quantity_required, searchID):
         distributor_name = distributor.find('h3', class_='distributor-title').text.replace(' ', '').replace('\n', '').\
             replace(
             '\xC2','').replace('\x95', '').replace('ECIA(NEDA)MemberAuthorizedDistributor','').\
-          replace('AuthorizedDistributor','')
+          replace('AuthorizedDistributor','').replace('Manufacturer Direct – Inventory Available for Immediate and Future Delivery','')
 
         for listing in distributor.find_all('tr', class_='row'):
             stock = listing.find('td', class_='td-stock').text
