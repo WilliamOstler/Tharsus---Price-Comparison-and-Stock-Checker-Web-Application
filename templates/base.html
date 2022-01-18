@@ -78,7 +78,7 @@
                             <a href="{{ url_for('index') }}" class="navbar-item">
                                Home
                             </a>
-                            <a href="{{ url_for('upload_file') }}" class="navbar-item">
+                            <a href="{{ url_for('users.upload_file') }}" class="navbar-item">
                                 Upload
                             </a>
                            {% if current_user.is_authenticated %}

@@ -79,6 +79,6 @@ def filterResults(searchID, BOM):
 def removeSearchrows(searchID):
 
     Results.query.filter(Results.searchnumber == searchID).delete()
-    db.session.commit
+    db.session.commit()
 
 

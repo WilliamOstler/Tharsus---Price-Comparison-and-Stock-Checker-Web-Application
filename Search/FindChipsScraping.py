@@ -1,7 +1,6 @@
 from bs4 import BeautifulSoup
 import requests
 import re
-from models import Results
 from Search import DatabaseProcess
 
 
