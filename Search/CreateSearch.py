@@ -43,7 +43,7 @@ def search(data,searchID):
         findchipsscraper(partnumber, quantity, searchID)
 
     # Filter the Results retrieved, so the best combination of suppliers are found
-    DatabaseProcess.filterResults(searchID, BOM)
+    DatabaseProcess.filterResults(searchID, data)
 
     # Convert the results to an Excel format
     # searchResults = convertToExcel()
