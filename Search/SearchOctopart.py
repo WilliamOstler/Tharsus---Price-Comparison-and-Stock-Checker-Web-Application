@@ -26,8 +26,8 @@ class SearchOctopart:
             # GraphQL query
             json={
                 'query': '''
-                query Search($q: String!) { 
-                    search_mpn(q: $q) { 
+                query Search($q: String!, $currency: String!) { 
+                    search_mpn(q: $q, currency: $currency) { 
                         results { 
                             part { 
                                 sellers {
@@ -51,7 +51,8 @@ class SearchOctopart:
                 ''',
 
                 'variables': {
-                    'q': '%s' % self.part_number
+                    'q': f'{self.part_number}',
+                    'currency': 'GBP'
                 },
             },
         )
