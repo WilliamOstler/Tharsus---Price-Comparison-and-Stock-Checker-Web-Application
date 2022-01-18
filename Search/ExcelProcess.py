@@ -40,5 +40,3 @@ def formatResults(searchID):
 
     wb.save(f"BOMSearch{searchID}results.xlsx")
     wb.close()
-
-formatResults(1)
