@@ -1,8 +1,10 @@
+from flask_login import UserMixin
+
 from app import db
+from werkzeug.security import generate_password_hash
 
 
-class User(db.Model):
-
+class User(db.Model, UserMixin):
     __tablename__ = 'User'
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.VARCHAR(100))
@@ -13,7 +15,7 @@ class User(db.Model):
 
     def __init__(self, email, password, firstname, surname, role):
         self.email = email
-        self.password = password
+        self.password = generate_password_hash(password)
         self.firstname = firstname
         self.surname = surname
         self.role = role
