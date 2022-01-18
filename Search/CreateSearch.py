@@ -4,6 +4,7 @@ from app import db
 from Search.FindChipsScraping import findchipsscraper
 from Search.SearchOctopart import SearchOctopart
 from Search import DatabaseProcess
+from Search import ExcelProcess
 
 
 # TODO: This is sample data, this data will be retrieved from the Excel BOM once complete.
@@ -43,10 +44,13 @@ def search(data,searchID):
         findchipsscraper(partnumber, quantity, searchID)
 
     # Filter the Results retrieved, so the best combination of suppliers are found
-    DatabaseProcess.filterResults(searchID, BOM)
+    DatabaseProcess.filterResults(searchID, data)
 
     # Convert the results to an Excel format
-    # searchResults = convertToExcel()
+    ExcelProcess.formatResults(searchID)
+
+    #Clear contents of DB for search
+    DatabaseProcess.removeSearchrows(searchID)
 
 
 

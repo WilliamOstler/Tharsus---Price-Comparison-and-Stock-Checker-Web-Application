@@ -78,6 +78,7 @@ def filterResults(searchID, BOM):
     removeSearchrows(searchID)
     for item in final_results:
         make_transient(item)
+    print(len(final_results))
     db.session.add_all(final_results)
     db.session.commit()
 
