@@ -43,6 +43,8 @@ def search(data,searchID):
     #Clear contents of DB for search
     DatabaseProcess.removeSearchrows(searchID)
 
+    return(searchID)
+
 
 
 
