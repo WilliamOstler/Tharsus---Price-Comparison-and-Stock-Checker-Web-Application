@@ -1,6 +1,6 @@
 import openpyxl
 from openpyxl import load_workbook
-from openpyxl.styles import PatternFill
+from openpyxl.styles import PatternFill, Font
 from models import Results
 
 def formatResults(searchID):
@@ -11,6 +11,7 @@ def formatResults(searchID):
 
 
     i=0
+    totalprice = 0
     for result in results_data:
 
         if result.stock <= result.stockrequired or Results.stock == 0:
@@ -36,7 +37,12 @@ def formatResults(searchID):
 
             write[f'E{str(8 + i)}'].fill = PatternFill(patternType='solid', fgColor='00008000')
 
+            totalprice += result.totalprice
+
         i+=1
 
-    wb.save(f"BOMSearch{searchID}results.xlsx")
+    write['H5'] = f'   Total price: £{round(totalprice, 2)}'
+    write['H5'].font = Font(size=19)
+
+    results_file = wb.save(f"BOMSearch{searchID}results.xlsx")
     wb.close()
