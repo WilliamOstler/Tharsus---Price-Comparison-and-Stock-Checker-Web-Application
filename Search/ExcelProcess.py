@@ -44,5 +44,5 @@ def formatResults(searchID):
     write['H5'] = f'   Total price: £{round(totalprice, 2)}'
     write['H5'].font = Font(size=19)
 
-    results_file = wb.save(f"BOMSearch{searchID}results.xlsx")
+    wb.save(f"/Users/williamostler/Desktop/University/Stage 2/CSC2033 - Software Engineering Team Project/PriceComparisonStockChecker/SearchResults/BOMSearch{searchID}results.xlsx")
     wb.close()
