@@ -130,7 +130,7 @@ def upload_file():
         if file:
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            db = read_excel("./" + UPLOAD_FOLDER + "/" + filename)
+            db = read_excel("./" + UPLOAD_FOLDER + "/" + filename, skiprows = 4)
             data = db.values
             CreateSearch.search(data, CreateSearch.get_search_id())
 
