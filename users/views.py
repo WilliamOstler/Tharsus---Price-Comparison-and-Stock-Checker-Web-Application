@@ -2,7 +2,7 @@
 import logging
 import pyotp
 from datetime import datetime
-from flask import Blueprint, render_template, flash, redirect, url_for,session, request
+from flask import Blueprint, render_template, flash, redirect, url_for, session, request, send_file
 from flask_login import current_user, login_user, logout_user
 from werkzeug.security import check_password_hash
 import os
@@ -132,11 +132,11 @@ def upload_file():
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             db = read_excel("./" + UPLOAD_FOLDER + "/" + filename, skiprows = 4)
             data = db.values
-            CreateSearch.search(data, CreateSearch.get_search_id())
+            search = CreateSearch.search(data, CreateSearch.get_search_id())
 
-            return redirect(url_for('index'))
+            path = f'/Users/williamostler/Desktop/University/Stage 2/CSC2033 - Software Engineering Team Project/PriceComparisonStockChecker/BOMSearch{search}results.xlsx'
+            return send_file(path, as_attachment=True)
     return render_template('upload.html')
-
 
 
 # view user account
