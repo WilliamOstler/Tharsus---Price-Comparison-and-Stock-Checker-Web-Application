@@ -1,9 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 import re
-from models import Results
 from Search import DatabaseProcess
-
 
 
 def stringchecker(value):
@@ -13,8 +11,6 @@ def stringchecker(value):
     except:
         result = 0
     return result
-
-
 
 
 def findchipsscraper(partnumber, quantity_required, searchID):
@@ -31,7 +27,8 @@ def findchipsscraper(partnumber, quantity_required, searchID):
     for distributor in distributors:
         distributor_name = distributor.find('h3', class_='distributor-title').text.replace(' ', '').replace('\n', '').\
             replace(
-            '\xC2','').replace('\x95', '').replace('ECIA(NEDA)MemberAuthorizedDistributor','')
+            '\xC2','').replace('\x95', '').replace('ECIA(NEDA)MemberAuthorizedDistributor','').\
+            replace('AuthorizedDistributor','')
         for listing in distributor.find_all('tr', class_='row'):
             stock = listing.find('td', class_='td-stock').text
             numeric_string = re.sub("[^0-9]", "", stock)
