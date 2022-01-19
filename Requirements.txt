@@ -25,3 +25,4 @@ requests
 lxml
 Pillow
 mysql-connector-python
+openpyxl
