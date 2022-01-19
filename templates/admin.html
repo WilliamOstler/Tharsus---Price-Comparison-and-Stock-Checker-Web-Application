@@ -18,9 +18,6 @@
             grid-gap: 2rem;
             margin: 5rem;
         }
-      
-    <script type="text/javascript" src="{{ url_for('static', filename='rng.js') }}"></script>
-    <h1>Admin</h1>
 
         .title {
             color: grey;
@@ -52,8 +49,14 @@
          a {
              background-color: orange;
          }
+         .settings-btn {
+             width: 25%;
+         }
+         input {
+             text-align: center;
+         }
     </style>
-    <h3 class="title is-3">Tharsus Price App Admin</h3>
+    <h1 class="title">Admin Panel</h1>
 
 
 
@@ -66,14 +69,14 @@
                           <h1>{{ user.firstname }} {{ user.surname }}</h1>
                           <p class="title">{{ user.role }} {{ user.id }} </p>
                             <p>{{ user.email }}</p>
-                          <button><a href="{{ url_for('admin.delete_user',id=user.id) }}">Delete User</a></button><button>Edit</button>
+                          <button><a href="{{ url_for('admin.delete_user',id=user.id) }}">Remove User</a></button>
                     </div>
                     {% endfor %}
                 </div>
             {% endif %}
             <form method="POST" action="/view_all_users">
                 <div>
-                    <button>View All Users</button>
+                    <button class="settings-btn">View All Users</button>
 
 
     <h2 class="title is-2">Supplier Preferences</h2>
@@ -97,7 +100,7 @@
             {% endif %}
             <form method="POST" action="/view_suppliers_Preferences">
                 <div>
-                    <button class="button is-info is-centered">Preferences</button>
+                    <button class="settings-btn">Preferences</button>
                 </div>
             </form>
         </div>
@@ -117,7 +120,7 @@
                     </div>
 
                 <div>
-                    <button class="button is-info is-centered">Favourite Supplier</button>
+                    <button class="settings-btn">Favourite Supplier</button>
                 </div>
 
             </form>
@@ -138,7 +141,7 @@
                     </div>
 
                 <div>
-                    <button class="button is-info is-centered">Remove Preference</button>
+                    <button class="settings-btn">Remove Preference</button>
                 </div>
 
             </form>

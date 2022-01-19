@@ -1,11 +1,58 @@
 {% extends "base.html" %}
 
 {% block content %}
+<head><link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+</head>
+    <style>
+     form input {
+	 padding: 10px 20px;
+	 border: 4px solid black;
+	 margin: 0 1.5rem;
+	 {#background-color: ghostwhite !important;#}
+	 -webkit-appearance: none;
+	 color: black;
+}
+ form input:-webkit-autofill {
+	 background-color: transparent !important;
+	 -webkit-box-shadow: 0 0 0px 1000px #000000 inset;
+	 -webkit-text-fill-color: ghostwhite !important;
+}
+ form input::placeholder {
+	 color: black;
+     text-align: center;
+}
+ form input:focus {
+	 color: black;
+	 font-weight: bold;
+	 outline: 0;
+	 border: 6px solid #EF8606FF;
+}
+ form input::-webkit-input-placeholder {
+	 opacity: 1;
+	 transition: inherit;
+}
+ form input:focus::-webkit-input-placeholder {
+	 opacity: 0;
+}
+.submit-btn {
+     border: none;
+	 padding: 0.85rem 1rem;
+	 background-color: #EF8606FF;
+	 color: white;
+	 font-size: 0.75rem;
+	 text-transform: uppercase;
+	 letter-spacing: 0.15em;
+	 transition: all 0.3s ease;
+ }
+    </style>
+
+
+
     <h1 class="title">File Upload</h1>
-    <h2 class="subtitle">Please upload file</h2>
+    <h2 class="subtitle">Drag and drop or click below to select a file.</h2>
     <form method="POST" action="" enctype="multipart/form-data">
         <p><input type="file" name="file"></p>
         <p><input name="Quantity", placeholder="Quantity"></p>
-        <p><input type="submit" value="Submit"></p>
+        <p><input class="submit-btn" type="submit" value="Submit"></p>
     </form>
 {% endblock %}

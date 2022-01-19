@@ -145,6 +145,9 @@ body, html {
     form a:hover {
 	 color: #EF8606FF;
 }
+    .error {
+        color: white;
+    }
 
 </style>
 </head>
@@ -156,40 +159,51 @@ body, html {
                 <div class="field">
                     {{ form.csrf_token() }}
                         {{ form.firstname(placeholder="First Name") }}
+                        <div class="error">
                             {% for error in form.firstname.errors %}
                                 {{ error }}
                             {% endfor %}
+                        </div>
                 </div>
                 <div class="field">
                     {{ form.csrf_token() }}
                         {{ form.lastname(placeholder="Last Name") }}
+                        <div class="error">
                             {% for error in form.lastname.errors %}
                                 {{ error }}
                             {% endfor %}
+                        </div>
                 </div>
 
                 <div class="field">
                     {{ form.csrf_token() }}
                         {{ form.email(placeholder="Email") }}
+                        <div class="error">
                             {% for error in form.email.errors %}
                                 {{ error }}
                             {% endfor %}
+                        </div>
                 </div>
 
                 <div class="field">
                     {{ form.csrf_token() }}
                         {{ form.password(placeholder="Password") }}
-                            {% for error in form.password.errors %}
-                                {{ error }}
-                            {% endfor %}
+                    <div class="error">
+                        {% for error in form.password.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+
                 </div>
 
                 <div class="field">
                     {{ form.csrf_token() }}
                         {{ form.confirm_password(placeholder="Confirm Password") }}
+                    <div class="error">
                             {% for error in form.confirm_password.errors %}
                                 {{ error }}
                             {% endfor %}
+                    </div>
                 </div>
 
                 <div>
