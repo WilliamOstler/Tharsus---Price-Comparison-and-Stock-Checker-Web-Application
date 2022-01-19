@@ -41,8 +41,16 @@ def delete_user(id):
 @login_required
 @requires_roles('admin')
 def add_supplier_to_blacklist():
+    blackistedSupplier = request.form.get("name")
+    newBlacklistedSupplier = Supplier(name=blackistedSupplier)
 
-  
+    db.session.add(newBlacklistedSupplier)
+    db.session.commit()
+
+    flash("New blacklisted supplier added")
+    return admin()
+
+
 @admin_blueprint.route('/view_suppliers_Preferences', methods=['POST'])
 @login_required
 def view_suppliers_Preferences():
