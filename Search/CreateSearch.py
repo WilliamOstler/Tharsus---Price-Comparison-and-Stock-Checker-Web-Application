@@ -7,29 +7,33 @@ from Search import DatabaseProcess
 from Search import ExcelProcess
 
 
-BOMQuantity = 5
-
 # Retrieve respected SearchID to use for this search
 def get_search_id():
     if db.session.query(Results).count() == 0:
         searchID = 1
+        confirm_searchid = Results("CONFIRM", "CONFIRM", "CONFIRM", "CONFIRM", -1, 1, 0, 0, "CONFIRM", searchID)
+        db.session.add(confirm_searchid)
+        db.session.commit()
         return searchID
     else:
         searchID = int(db.session.query(func.max(Results.searchnumber)).scalar()) + 1
+        confirm_searchid = Results("CONFIRM", "CONFIRM", "CONFIRM", "CONFIRM", -1, 1, 0, 0, "CONFIRM", searchID)
+        db.session.add(confirm_searchid)
+        db.session.commit()
         return searchID
 
 
 
 # Loop for all items in the BOM
-def search(data,searchID):
+def search(data, quantity, searchID):
     for parts in data:
     # Retrieve the partnumber and quantity for the current BOM item.
         partnumber = parts[0]
-        quantity = parts[1] * BOMQuantity
+        quantity = parts[1] * int(quantity)
 
     # Search Octopart for the part
-        octopart = SearchOctopart(partnumber, quantity, searchID)
-        octopart.searchParts()
+        #octopart = SearchOctopart(partnumber, quantity, searchID)
+        #octopart.searchParts()
 
     # Search FindCips for the part
         findchipsscraper(partnumber, quantity, searchID)

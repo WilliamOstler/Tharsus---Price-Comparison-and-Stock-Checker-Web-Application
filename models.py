@@ -60,6 +60,3 @@ class Results(db.Model):
         self.totalprice = totalprice
         self.link = link
         self.searchnumber = searchnumber
-
-
-db.create_all()

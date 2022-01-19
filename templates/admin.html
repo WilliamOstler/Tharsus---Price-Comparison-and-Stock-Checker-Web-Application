@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+
     <style>
         .user-card {
         {#box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);#}
@@ -17,6 +18,9 @@
             grid-gap: 2rem;
             margin: 5rem;
         }
+      
+    <script type="text/javascript" src="{{ url_for('static', filename='rng.js') }}"></script>
+    <h1>Admin</h1>
 
         .title {
             color: grey;
@@ -52,6 +56,7 @@
     <h3 class="title is-3">Tharsus Price App Admin</h3>
 
 
+
         <h4 class="title is-4">Current Users</h4>
 
             {% if current_users %}
@@ -69,34 +74,75 @@
             <form method="POST" action="/view_all_users">
                 <div>
                     <button>View All Users</button>
+
+
+    <h2 class="title is-2">Supplier Preferences</h2>
+        <div class="box">
+            {% if suppliers %}
+                <div class="field">
+                    <table class="table">
+                        <tr>
+                            <th>Name</th>
+                            <th>Blacklisted</th>
+                            <th>Favourited</th>
+                        </tr>
+                        {% for supplier in suppliers %}
+                            <tr>
+                                <td>{{ supplier.name }}</td>
+                                <td>{{ supplier.blacklisted }}</td>
+                                <td>{{ supplier.favourited }}</td>
+                        {% endfor %}
+                    </table>
+                </div>
+            {% endif %}
+            <form method="POST" action="/view_suppliers_Preferences">
+                <div>
+                    <button class="button is-info is-centered">Preferences</button>
                 </div>
             </form>
         </div>
     </div>
 
-{#    <div class="column is-8 is-offset-2" id="test">#}
-{#        <h4 class="title is-4">Security Logs</h4>#}
-{#        <div class="box">#}
-{#            {% if logs %}#}
-{#                <div class="field">#}
-{#                <table class="table">#}
-{#                    <tr>#}
-{#                        <th>Last 10 Security Log Entries</th>#}
-{#                    </tr>#}
-{#                    {% for entry in logs %}#}
-{#                        <tr>#}
-{#                            <td>{{ entry }}</td>#}
-{#                        </tr>#}
-{#                    {% endfor %}#}
-{#                </table>#}
-{#            {% endif %}#}
-{#            <form method="POST" action="/logs">#}
-{#                <div>#}
-{#                    <button class="button is-info is-centered">View Logs</button>#}
-{#                </div>#}
-{#            </form>#}
-{#            </div>#}
-{#        </div>#}
 
+
+    <div class="column is-8 is-offset-2">
+        <h4 class="title is-4">Favourite Supplier</h4>
+        <div class="box">
+            <form method="POST" action="/favourite_supplier">
+
+                <div class="columns is-multiline is-centered">
+
+                    <div class="column is-one-sixth">
+                        <input class="input" name="favourite_supplier" placeholder="Enter Supplier Name">
+                    </div>
+
+                <div>
+                    <button class="button is-info is-centered">Favourite Supplier</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+
+
+    <div class="column is-8 is-offset-2">
+        <h4 class="title is-4">Removed Supplier Preference</h4>
+        <div class="box">
+            <form method="POST" action="/remove_preference">
+
+                <div class="columns is-multiline is-centered">
+
+                    <div class="column is-one-sixth">
+                        <input class="input" name="remove_preference" placeholder="Enter Supplier Name">
+                    </div>
+
+                <div>
+                    <button class="button is-info is-centered">Remove Preference</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
 
 {% endblock %}

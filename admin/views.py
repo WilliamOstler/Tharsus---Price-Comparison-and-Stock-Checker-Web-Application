@@ -1,6 +1,8 @@
 from flask import Blueprint, render_template, request, flash
 from flask_login import current_user, login_required
+
 from app import db, requires_roles
+
 from models import Supplier, User
 
 admin_blueprint = Blueprint('admin', __name__, template_folder='templates')
@@ -40,24 +42,44 @@ def delete_user(id):
 @requires_roles('admin')
 def add_supplier_to_blacklist():
 
+  
+@admin_blueprint.route('/view_suppliers_Preferences', methods=['POST'])
+@login_required
+def view_suppliers_Preferences():
+    return render_template('admin.html', suppliers=Supplier.query.all())
 
 
-    blacklistedSupplier = request.form.get("name")
-    newBlacklistedSupplier = Supplier(name=blacklistedSupplier)
 
-    db.session.add(newBlacklistedSupplier)
-    db.session.commit()
+@admin_blueprint.route('/favourite_supplier', methods=['POST'])
+@login_required
+def favourite_supplier():
+    favourite = request.form.get('favourite_supplier')
+    print(favourite)
 
-    flash("New blacklisted supplier added")
+    if len((Supplier.query.filter_by(name=favourite).all())) == 0:
+        new_favourite = Supplier(favourite, 0, 1)
+        db.session.add(new_favourite)
+        db.session.commit()
+    else:
+        Supplier.query.filter_by(name=favourite).delete()
+        new_favourite = Supplier(favourite, 0, 1)
+        db.session.add(new_favourite)
+        db.session.commit()
+
+    flash("Supplier Favourited")
     return admin()
 
-def add_supplier_to_favourites():
 
-    favouriteSupplier = request.form.get("name")
-    newFavouriteSupplier = Supplier(name=favouriteSupplier)
+@admin_blueprint.route('/remove_preference', methods=['POST'])
+@login_required
+def remove_preference():
+    supplier = request.form.get('remove_preference')
 
-    db.session.add(newFavouriteSupplier)
-    db.session.commit()
+    if len((Supplier.query.filter_by(name=supplier).all())) == 0:
+        flash(f"No preference registered for {supplier}")
+    else:
+        Supplier.query.filter_by(name=supplier).delete()
+        db.session.commit()
 
-    flash("New favourite supplier added")
+    flash("Preference Removed")
     return admin()

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1 class="title">Search Results Found!</h1>
+
+    <div class="column is-8 is-offset-2">
+        <div class="box">
+             <form action= {{ url_for('users.results', id="1")}} method="post">
+                 <button name="download" type="submit">Download Results</button>
+                 <input type="hidden" name="id" value="{{ searchID }}">
+             </form>
+        </div>
+
+    </div>
+
+
+
+
+
+
+{% endblock %}

@@ -1,15 +1,13 @@
 # IMPORTS
 import logging
-
+from users.forms import LoginForm
 import socket
 from functools import wraps
 from flask import Flask, render_template, request, redirect, flash, url_for
 from flask_login import LoginManager, current_user
 from flask_sqlalchemy import SQLAlchemy
 
-
-
-
+import users.forms
 
 UPLOAD_FOLDER = 'uploads'
 
@@ -46,13 +44,11 @@ def requires_roles(*roles):
 
 # HOME PAGE VIEW
 @app.route('/')
-def index():
-    print(request.headers)
+def Search():
     if current_user.is_authenticated:
-        return render_template('index.html', firstname=current_user.firstname, id=current_user.id)
+        return render_template('index.html')
     else:
         return render_template('index.html')
-
 
 
 
