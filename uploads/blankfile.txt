@@ -1,0 +1,2 @@
+blankfile.txt is purely functional and was created to allow the developers to push the otherwise empty
+"uploads" directory to the git repo
