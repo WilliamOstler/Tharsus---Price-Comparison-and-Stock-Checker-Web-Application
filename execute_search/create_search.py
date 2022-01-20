@@ -3,6 +3,7 @@ Main search file. Contains the main method which will call all required methods 
 a complete part such to be carried out.
 """
 from execute_search import excel_process
+from execute_search.search_octopart import SearchOctopart
 from execute_search import database_process
 from sqlalchemy import func
 from execute_search.findchips_scraper import findchipsscraper
@@ -45,11 +46,11 @@ def search(data, quantity, search_id):
         quantity = parts[1] * int(quantity)
 
         # execute_search Octopart for this part
-        #octopart = SearchOctopart(part_number, quantity, search_id)
-        #octopart.search_parts()
+        octopart = SearchOctopart(part_number, quantity, search_id)
+        octopart.search_parts()
 
         # execute_search FindChips for this part
-        findchipsscraper(part_number, quantity, search_id)
+        findchipsscraper(str(part_number), quantity, search_id)
 
     # Filter the Results retrieved from Octopart and FindChips, so only the best combination of
     # suppliers are remaining

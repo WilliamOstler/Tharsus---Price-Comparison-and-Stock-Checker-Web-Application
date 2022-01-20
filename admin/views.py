@@ -31,7 +31,7 @@ def view_all_users():
                            current_users=User.query.filter_by(role='user').all())
 
 
-@admin_blueprint.route('/delete_user/<int:id>')
+@admin_blueprint.route('/delete_user/<int:user_id>')
 @login_required
 @requires_roles('admin')
 def delete_user(user_id):

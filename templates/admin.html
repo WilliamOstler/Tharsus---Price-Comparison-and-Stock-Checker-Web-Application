@@ -59,7 +59,6 @@
     <h1 class="title">Admin Panel</h1>
 
 
-
         <h4 class="title is-4">Current Users</h4>
 
             {% if current_users %}
@@ -69,7 +68,7 @@
                           <h1>{{ user.firstname }} {{ user.surname }}</h1>
                           <p class="title">{{ user.role }} {{ user.id }} </p>
                             <p>{{ user.email }}</p>
-                          <button><a href="{{ url_for('admin.delete_user',id=user.id) }}">Remove User</a></button>
+                          <button><a href="{{ url_for('admin.delete_user',user_id=user.id) }}">Remove User</a></button>
                     </div>
                     {% endfor %}
                 </div>
@@ -79,11 +78,6 @@
                     <button class="settings-btn">View All Users</button>
                 </div>
             </form>
-
-
-
-
-
 
 
         <h4 class="title is-4">Supplier Preferences</h4>
@@ -109,13 +103,12 @@
             {% endif %}
 
 
+
             <form method="POST" action="/view_suppliers_Preferences">
                 <div>
                     <button class="settings-btn">View Supplier Preferences</button>
                 </div>
             </form>
-
-
 
 
     <div class="column is-8 is-offset-2">
