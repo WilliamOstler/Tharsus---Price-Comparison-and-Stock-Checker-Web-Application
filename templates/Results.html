@@ -1,12 +1,29 @@
 {% extends "base.html" %}
 
 {% block content %}
+    <style>
+     #buttonClass {
+         background-color:#EF8606FF;
+         color: white;
+         font-size: 0.75rem;
+         text-transform: uppercase;
+         padding: 0.85rem 1rem;
+         margin-top: 2rem;
+         width: 25%;
+         letter-spacing: 0.15em;
+         transition: all 0.3s ease;
+         opacity: 1;
+     }
+      form button:hover {
+          border: 6px solid #C26105FF;
+      }
+    </style>
     <h1 class="title">Search Results Found!</h1>
 
     <div class="column is-8 is-offset-2">
         <div class="box">
              <form action= {{ url_for('users.results', id="1")}} method="post">
-                 <button name="download" type="submit">Download Results</button>
+                 <button name="download" id="buttonClass" type="submit">Download Results</button>
                  <input type="hidden" name="id" value="{{ searchID }}">
              </form>
         </div>
