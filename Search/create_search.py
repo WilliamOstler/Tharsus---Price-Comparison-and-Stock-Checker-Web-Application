@@ -2,7 +2,7 @@
 Main search file. Contains the main method which will call all required methods in order for
 a complete part such to be carried out.
 """
-import ExcelProcess
+import excel_process
 import DatabaseProcess
 from sqlalchemy import func
 from FindChipsScraping import findchipsscraper
@@ -57,7 +57,7 @@ def search(data, quantity, search_id):
     DatabaseProcess.filterResults(search_id, data)
 
     # Convert the search results to an Excel format
-    ExcelProcess.formatResults(search_id)
+    excel_process.formatResults(search_id)
 
     # Clear contents of the Results table from this search's data
     DatabaseProcess.removeSearchrows(search_id)
