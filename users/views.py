@@ -88,12 +88,18 @@ def upload_file():
 
     return render_template('search.html')
 
+@users_blueprint.route('/download', methods=['GET'])
+def download_file():
+    path = f'BOMInputTemplate/Example_BOM_1.xlsx'
+    return send_file(path)
+
+
 
 @users_blueprint.route('/results', methods=['GET', 'POST'])
 @login_required
 def results():
     request.form.get('download')
-    path = f"/Users/williamostler/Desktop/University/Stage 2/CSC2033 - Software Engineering Team Project/PriceComparisonStockChecker/SearchResults/BOMSearch{request.form.get('id')}results.xlsx"
+    path = f"SearchResults/BOMSearch{request.form.get('id')}results.xlsx"
     return send_file(path, as_attachment=True)
 
 
