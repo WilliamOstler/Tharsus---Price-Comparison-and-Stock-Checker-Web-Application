@@ -51,7 +51,6 @@ def view_supplier_preferences():
 @requires_roles('admin')
 def favourite_supplier():
     favourite = request.form.get('favourite_supplier')
-    print(favourite)
 
     if len((Supplier.query.filter_by(name=favourite).all())) == 0:
         new_favourite = Supplier(favourite, 0, 1)

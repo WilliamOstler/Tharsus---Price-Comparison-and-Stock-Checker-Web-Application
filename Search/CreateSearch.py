@@ -11,15 +11,9 @@ from Search import ExcelProcess
 def get_search_id():
     if db.session.query(Results).count() == 0:
         searchID = 1
-        confirm_searchid = Results("CONFIRM", "CONFIRM", "CONFIRM", "CONFIRM", -1, 1, 0, 0, "CONFIRM", searchID)
-        db.session.add(confirm_searchid)
-        db.session.commit()
         return searchID
     else:
         searchID = int(db.session.query(func.max(Results.searchnumber)).scalar()) + 1
-        confirm_searchid = Results("CONFIRM", "CONFIRM", "CONFIRM", "CONFIRM", -1, 1, 0, 0, "CONFIRM", searchID)
-        db.session.add(confirm_searchid)
-        db.session.commit()
         return searchID
 
 

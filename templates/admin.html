@@ -102,8 +102,7 @@
                             {% if supplier.blacklisted == 1 %}
                                 <p class="title">Supplier is blacklisted</p>
                             {% endif %}
-
-                          <button><a href="{{ url_for('admin.remove_preference', name=supplier.name) }}">Remove Preference</a></button>
+                            <button><a href="{{ url_for('admin.remove_preference', name=supplier.name) }}">Remove Preference</a></button>
                         </div>
                     {% endfor %}
                 </div>
@@ -150,9 +149,9 @@
                         <input class="input" name="blacklist_supplier" placeholder="Enter Supplier Name">
                     </div>
 
-                <div>
-                    <button class="settings-btn">Blacklist Supplier</button>
-                </div>
+                    <div>
+                        <button class="settings-btn">Blacklist Supplier</button>
+                    </div>
 
             </form>
         </div>

@@ -16,20 +16,26 @@ def addRow(row):
 def filterResults(searchID, BOM):
 
     final_results = Results.query.filter(Results.searchnumber == searchID).all()
+    #final_results.remove(Results.query.filter(Results.supplier == 'CONFIRM').all())
 
     # Delete blacklisted suppliers
     for supplier in (Supplier.query.filter(Supplier.blacklisted == True)).all():
-
-        for listing in (Results.query.filter(Results.searchnumber == searchID).all()):
-
+        for listing in (final_results):
             if supplier.name == listing.supplier:
+                print(final_results)
+                print(listing)
+                final_results.remove(listing)
+                print("removed")
 
-                final_results.remove(Results.query.filter(Results.supplier == listing.supplier).all())
 
-    # #Find the cheapest supplier for each part
+    #Find the cheapest supplier for each part
     for parts in BOM:
+
+        print(parts)
         i = Results.query.filter(Results.searchnumber == searchID).filter(Results.partnumber == parts[0]).all()
+
         if (len(i) != 0):
+
             lowestprice = i[0]
 
             for j in i:
