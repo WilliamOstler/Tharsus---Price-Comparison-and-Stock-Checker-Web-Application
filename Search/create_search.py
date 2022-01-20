@@ -5,7 +5,7 @@ a complete part such to be carried out.
 from Search import excel_process
 from Search import database_process
 from sqlalchemy import func
-from Search.FindChipsScraping import findchipsscraper
+from Search.findchips_scraper import findchipsscraper
 from Search.search_octopart import SearchOctopart
 from models import Results
 from app import db
