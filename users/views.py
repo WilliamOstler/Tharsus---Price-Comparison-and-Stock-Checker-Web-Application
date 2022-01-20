@@ -90,7 +90,7 @@ def upload_file():
 
 @users_blueprint.route('/download', methods=['GET'])
 def download_file():
-    path = f'BOMInputTemplate/Example_BOM_1.xlsx'
+    path = f'BOMInputTemplate/BOM_Template.xlsx'
     return send_file(path)
 
 
