@@ -3,7 +3,7 @@ Responsible for retrieving data from Octopart.com, using the OctopartAPI
 Adds results found to the Results data table.
 """
 import requests
-from Search import database_process
+from execute_search import database_process
 
 class SearchOctopart:
     """
@@ -37,7 +37,7 @@ class SearchOctopart:
             # GraphQL query
             json={
                 'query': '''
-                query Search($q: String!, $currency: String!) { 
+                query execute_search($q: String!, $currency: String!) { 
                     search_mpn(q: $q, currency: $currency) { 
                         results { 
                             part { 

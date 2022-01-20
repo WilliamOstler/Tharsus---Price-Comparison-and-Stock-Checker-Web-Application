@@ -4,7 +4,7 @@ Containns the Web Scraper for scraping listings from FindChips.com
 import re
 from bs4 import BeautifulSoup
 import requests
-from Search import database_process
+from execute_search import database_process
 
 
 def string_checker(value):

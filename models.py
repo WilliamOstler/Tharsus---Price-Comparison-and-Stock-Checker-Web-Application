@@ -1,5 +1,4 @@
 from flask_login import UserMixin
-
 from app import db
 from werkzeug.security import generate_password_hash
 
@@ -58,8 +57,8 @@ class Results(db.Model):
     link = db.Column(db.VARCHAR(2000))
     searchnumber = db.Column(db.Integer, primary_key=True)
 
-    def __init__(self, source, partnumber, alternate_partnumber, supplier, stock, stockrequired, priceperunit,
-                 totalprice, link, searchnumber):
+    def __init__(self, source, partnumber, alternate_partnumber, supplier, stock, stockrequired,
+                 priceperunit, totalprice, link, searchnumber):
         self.source = source
         self.partnumber = partnumber
         self.alternate_partnumber = alternate_partnumber
