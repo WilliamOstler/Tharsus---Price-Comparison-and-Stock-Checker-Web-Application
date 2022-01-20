@@ -88,6 +88,12 @@ def upload_file():
 
     return render_template('search.html')
 
+@users_blueprint.route('/download', methods=['GET'])
+def download_file():
+    path = f'BOMInputTemplate/Example_BOM_1.xlsx'
+    return send_file(path)
+
+
 
 @users_blueprint.route('/results', methods=['GET', 'POST'])
 @login_required
