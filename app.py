@@ -24,6 +24,11 @@ db = SQLAlchemy(app)
 
 # FUNCTIONS
 def requires_roles(*roles):
+    """
+    This method guarantees that only inputted roles will be able to access flask view methods.
+    :param roles: roles which are authorized to access a page.
+    :return: logging.warning if current.user was not in roles.
+    """
     def wrapper(f):
         @wraps(f)
         def wrapped(*args, **kwargs):
@@ -45,6 +50,7 @@ def requires_roles(*roles):
 # HOME PAGE VIEW
 @app.route('/')
 def Search():
+
     if current_user.is_authenticated:
         return render_template('index.html')
     else:
