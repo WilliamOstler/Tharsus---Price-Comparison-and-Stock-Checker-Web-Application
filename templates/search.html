@@ -44,6 +44,11 @@
 	 letter-spacing: 0.15em;
 	 transition: all 0.3s ease;
  }
+    #downloadLink{
+        color: black;
+        text-decoration: underline;
+    }
+
     </style>
 
 
@@ -55,4 +60,5 @@
         <p><input name="Quantity", placeholder="Quantity"></p>
         <p><input class="submit-btn" type="submit" value="Submit"></p>
     </form>
+    <a id="downloadLink" download href="BOMInputTemplate/Example_BOM_1.xlsx">To upload a BOM, please ensure you are using our template</a>
 {% endblock %}
