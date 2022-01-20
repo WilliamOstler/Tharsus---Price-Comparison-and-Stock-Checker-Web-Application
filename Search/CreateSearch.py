@@ -2,7 +2,7 @@ from sqlalchemy import func
 from models import Results
 from app import db
 from Search.FindChipsScraping import findchipsscraper
-from Search.SearchOctopart import SearchOctopart
+from Search.search_octopart import SearchOctopart
 from Search import DatabaseProcess
 from Search import ExcelProcess
 

@@ -66,7 +66,10 @@ def filterResults(searchID, BOM):
 
                 for listing in (Results.query.filter(Results.searchnumber == searchID).filter(Results.partnumber == parts[0]).all()):
                     if listing != selected_listing:
-                        final_results.remove(listing)
+                        try:
+                            final_results.remove(listing)
+                        except:
+                            print('Blacklisted')
 
             else:
                 for listing in (Results.query.filter(Results.searchnumber == searchID).filter(Results.partnumber == parts[0]).all()):
