@@ -3,7 +3,12 @@ from openpyxl import load_workbook
 from openpyxl.styles import PatternFill, Font
 from models import Results
 
+
 def formatResults(searchID):
+    """
+    This method populates the template excel file with information from the database
+    and saves it.
+    """
 
     wb = load_workbook('BOMOutputTemplate/BOMOutput.xlsx')
     results_data = Results.query.filter(Results.searchnumber == searchID).all()
