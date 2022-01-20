@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 import re
-from Search import DatabaseProcess
+from Search import database_process
 
 
 def string_checker(value):
@@ -62,4 +62,4 @@ def findchipsscraper(partnumber, quantity_required, search_id):
                     if int(quantity) <= quantity_required:
                         result = [part_source, partnumber, part_id, distributor_name, numeric_string, quantity_required,
                                   float(value), float(value) * quantity_required, link, search_id]
-                        DatabaseProcess.addRow(result)
+                        database_process.add_row(result)
