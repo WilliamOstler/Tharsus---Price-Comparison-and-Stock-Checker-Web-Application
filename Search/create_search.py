@@ -46,8 +46,8 @@ def search(data, quantity, search_id):
         quantity = parts[1] * int(quantity)
 
         # Search Octopart for this part
-        octopart = SearchOctopart(part_number, quantity, search_id)
-        octopart.search_parts()
+        #octopart = SearchOctopart(part_number, quantity, search_id)
+        #octopart.search_parts()
 
         # Search FindChips for this part
         findchipsscraper(part_number, quantity, search_id)

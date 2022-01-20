@@ -67,7 +67,7 @@ def filter_results(search_id, bill_of_materials):
 
             else:
                 for listing in (Results.query.filter(Results.searchnumber == search_id).
-                        filter(Results.partnumber == parts[0]).all()):
+                    filter(Results.partnumber == parts[0]).all()):
                     final_results.remove(listing)
 
 
