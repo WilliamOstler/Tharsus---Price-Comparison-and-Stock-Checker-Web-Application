@@ -3,8 +3,7 @@ Responsible for retrieving data from Octopart.com, using the OctopartAPI
 Adds results found to the Results data table.
 """
 import requests
-import DatabaseProcess
-
+from Search import database_process
 
 class SearchOctopart:
     """
@@ -74,7 +73,7 @@ class SearchOctopart:
 
         # Add the listings found to the database
         for listing in results:
-            DatabaseProcess.addRow(listing)
+            database_process.add_row(listing)
 
 
 
