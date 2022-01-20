@@ -5,7 +5,7 @@ from models import Results
 
 def formatResults(searchID):
 
-    wb = load_workbook('/Users/williamostler/Desktop/University/Stage 2/CSC2033 - Software Engineering Team Project/PriceComparisonStockChecker/BOMOutputTemplate/BOMOutput.xlsx')
+    wb = load_workbook('BOMOutputTemplate/BOMOutput.xlsx')
     results_data = Results.query.filter(Results.searchnumber == searchID).all()
     write = wb.active
 
@@ -44,5 +44,5 @@ def formatResults(searchID):
     write['H5'] = f'   Total price: £{round(totalprice, 2)}'
     write['H5'].font = Font(size=19)
 
-    wb.save(f"/Users/williamostler/Desktop/University/Stage 2/CSC2033 - Software Engineering Team Project/PriceComparisonStockChecker/SearchResults/BOMSearch{searchID}results.xlsx")
+    wb.save(f'SearchResults/BOMSearch{searchID}results.xlsx')
     wb.close()

@@ -99,7 +99,7 @@ def download_file():
 @login_required
 def results():
     request.form.get('download')
-    path = f"/Users/williamostler/Desktop/University/Stage 2/CSC2033 - Software Engineering Team Project/PriceComparisonStockChecker/SearchResults/BOMSearch{request.form.get('id')}results.xlsx"
+    path = f"SearchResults/BOMSearch{request.form.get('id')}results.xlsx"
     return send_file(path, as_attachment=True)
 
 
