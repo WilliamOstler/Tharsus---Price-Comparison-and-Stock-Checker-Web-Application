@@ -9,7 +9,7 @@ from models import User
 from users.forms import RegisterForm, LoginForm
 from pandas import read_excel
 from werkzeug.utils import secure_filename
-from Search import CreateSearch
+from Search import create_search
 
 # CONFIG
 users_blueprint = Blueprint('users', __name__, template_folder='templates')
@@ -81,10 +81,11 @@ def upload_file():
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             db = read_excel("./" + UPLOAD_FOLDER + "/" + filename, skiprows = 4)
             data = db.values
-            search = CreateSearch.search(data, request.values['Quantity'], CreateSearch.get_search_id())
+            search_id = create_search.get_search_id()
+            create_search.search(data, request.values['Quantity'], search_id)
 
 
-            return render_template('Results.html', searchID=search)
+            return render_template('Results.html', searchID=search_id)
 
     return render_template('search.html')
 
