@@ -5,6 +5,9 @@ from werkzeug.security import generate_password_hash
 
 
 class User(db.Model, UserMixin):
+    """
+    This class represents a logged in user
+    """
     __tablename__ = 'User'
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.VARCHAR(100))
@@ -22,6 +25,9 @@ class User(db.Model, UserMixin):
 
 
 class Supplier(db.Model):
+    """
+    This class represents a parts supplier company.
+    """
 
     __tablename__ = 'Supplier'
     name = db.Column(db.VARCHAR(100), primary_key=True)
@@ -35,6 +41,9 @@ class Supplier(db.Model):
 
 
 class Results(db.Model):
+    """
+    This class represents all gathered information about parts
+    """
 
     __tablename__ = 'Results'
 
@@ -49,7 +58,8 @@ class Results(db.Model):
     link = db.Column(db.VARCHAR(2000))
     searchnumber = db.Column(db.Integer, primary_key=True)
 
-    def __init__(self, source, partnumber, alternate_partnumber, supplier, stock, stockrequired, priceperunit, totalprice, link, searchnumber):
+    def __init__(self, source, partnumber, alternate_partnumber, supplier, stock, stockrequired, priceperunit,
+                 totalprice, link, searchnumber):
         self.source = source
         self.partnumber = partnumber
         self.alternate_partnumber = alternate_partnumber
