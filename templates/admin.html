@@ -77,34 +77,45 @@
             <form method="POST" action="/view_all_users">
                 <div>
                     <button class="settings-btn">View All Users</button>
-
-
-    <h2 class="title is-2">Supplier Preferences</h2>
-        <div class="box">
-            {% if suppliers %}
-                <div class="field">
-                    <table class="table">
-                        <tr>
-                            <th>Name</th>
-                            <th>Blacklisted</th>
-                            <th>Favourited</th>
-                        </tr>
-                        {% for supplier in suppliers %}
-                            <tr>
-                                <td>{{ supplier.name }}</td>
-                                <td>{{ supplier.blacklisted }}</td>
-                                <td>{{ supplier.favourited }}</td>
-                        {% endfor %}
-                    </table>
-                </div>
-            {% endif %}
-            <form method="POST" action="/view_suppliers_Preferences">
-                <div>
-                    <button class="settings-btn">Preferences</button>
                 </div>
             </form>
-        </div>
-    </div>
+
+
+
+
+
+
+
+        <h4 class="title is-4">Supplier Preferences</h4>
+
+            {% if supplier_preferences %}
+                <div class="card-content">
+
+                    {% for supplier in supplier_preferences %}
+                        <div class="user-card">
+                          <h1>{{ supplier.name }}</h1>
+
+                            {% if supplier.favourited == 1 %}
+                                <p class="title">Supplier is favourited</p>
+                            {% endif %}
+
+                            {% if supplier.blacklisted == 1 %}
+                                <p class="title">Supplier is blacklisted</p>
+                            {% endif %}
+
+                          <button><a href="{{ url_for('admin.remove_preference', name=supplier.name) }}">Remove Preference</a></button>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+
+            <form method="POST" action="/view_suppliers_Preferences">
+                <div>
+                    <button class="settings-btn">View Supplier Preferences</button>
+                </div>
+            </form>
+
 
 
 
@@ -128,20 +139,19 @@
     </div>
 
 
-
     <div class="column is-8 is-offset-2">
-        <h4 class="title is-4">Removed Supplier Preference</h4>
+        <h4 class="title is-4">Blacklist Supplier</h4>
         <div class="box">
-            <form method="POST" action="/remove_preference">
+            <form method="POST" action="/blacklist_supplier">
 
                 <div class="columns is-multiline is-centered">
 
                     <div class="column is-one-sixth">
-                        <input class="input" name="remove_preference" placeholder="Enter Supplier Name">
+                        <input class="input" name="blacklist_supplier" placeholder="Enter Supplier Name">
                     </div>
 
                 <div>
-                    <button class="settings-btn">Remove Preference</button>
+                    <button class="settings-btn">Blacklist Supplier</button>
                 </div>
 
             </form>

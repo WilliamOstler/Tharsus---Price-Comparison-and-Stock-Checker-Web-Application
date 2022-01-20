@@ -37,29 +37,18 @@ def delete_user(id):
         flash("Failed.")
 
 
-@admin_blueprint.route('/add_supplier_to_blacklist', methods=['POST'])
-@login_required
-@requires_roles('admin')
-def add_supplier_to_blacklist():
-    blackistedSupplier = request.form.get("name")
-    newBlacklistedSupplier = Supplier(name=blackistedSupplier)
-
-    db.session.add(newBlacklistedSupplier)
-    db.session.commit()
-
-    flash("New blacklisted supplier added")
-    return admin()
-
-
 @admin_blueprint.route('/view_suppliers_Preferences', methods=['POST'])
 @login_required
-def view_suppliers_Preferences():
-    return render_template('admin.html', suppliers=Supplier.query.all())
+@requires_roles('admin')
+def view_supplier_preferences():
+    # get list of all users
+    return render_template('admin.html', supplier_preferences=Supplier.query.all())
 
 
 
 @admin_blueprint.route('/favourite_supplier', methods=['POST'])
 @login_required
+@requires_roles('admin')
 def favourite_supplier():
     favourite = request.form.get('favourite_supplier')
     print(favourite)
@@ -78,16 +67,34 @@ def favourite_supplier():
     return admin()
 
 
-@admin_blueprint.route('/remove_preference', methods=['POST'])
+@admin_blueprint.route('/blacklist_supplier', methods=['POST'])
 @login_required
-def remove_preference():
-    supplier = request.form.get('remove_preference')
+@requires_roles('admin')
+def blacklist_supplier():
+    blacklist = request.form.get('blacklist_supplier')
 
-    if len((Supplier.query.filter_by(name=supplier).all())) == 0:
-        flash(f"No preference registered for {supplier}")
+    if len((Supplier.query.filter_by(name=blacklist).all())) == 0:
+        new_blacklist = Supplier(blacklist, 1, 0)
+        db.session.add(new_blacklist)
+        db.session.commit()
     else:
-        Supplier.query.filter_by(name=supplier).delete()
+        Supplier.query.filter_by(name=blacklist).delete()
+        new_blacklist = Supplier(blacklist, 1, 0)
+        db.session.add(new_blacklist)
         db.session.commit()
 
-    flash("Preference Removed")
+    flash("Supplier Blacklisted")
     return admin()
+
+
+@admin_blueprint.route('/remove_preference/<string:name>')
+@login_required
+@requires_roles('admin')
+def remove_preference(name):
+    supplier = Supplier.query.get_or_404(name)
+    try:
+        db.session.delete(supplier)
+        db.session.commit()
+        return render_template('admin.html')
+    except:
+        flash("Failed.")
