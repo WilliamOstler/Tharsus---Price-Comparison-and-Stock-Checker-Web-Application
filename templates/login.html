@@ -141,7 +141,9 @@ body, html {
     form a:hover {
 	 color: #EF8606FF;
 }
-
+#errorMessage{
+    color:white;
+}
 
 </style>
 </head>
@@ -152,8 +154,10 @@ body, html {
                 <div class="field">
                     {{ form.csrf_token() }}
                             {{ form.email(placeholder="Email") }}
+                                <div id="errorMessage">
                                 {% for error in form.email.errors %}
                                     {{ error }}
+                                </div>
                                 {% endfor %}
                 </div>
                 <div class="field">
