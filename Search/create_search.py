@@ -2,11 +2,11 @@
 Main search file. Contains the main method which will call all required methods in order for
 a complete part such to be carried out.
 """
-import excel_process
-import DatabaseProcess
+from Search import excel_process
+from Search import database_process
 from sqlalchemy import func
-from FindChipsScraping import findchipsscraper
-from search_octopart import SearchOctopart
+from Search.FindChipsScraping import findchipsscraper
+from Search.search_octopart import SearchOctopart
 from models import Results
 from app import db
 
@@ -54,10 +54,10 @@ def search(data, quantity, search_id):
 
     # Filter the Results retrieved from Octopart and FindChips, so only the best combination of
     # suppliers are remaining
-    DatabaseProcess.filterResults(search_id, data)
+    database_process.filter_results(search_id, data)
 
     # Convert the search results to an Excel format
-    excel_process.formatResults(search_id)
+    excel_process.format_results(search_id)
 
     # Clear contents of the Results table from this search's data
-    DatabaseProcess.removeSearchrows(search_id)
+    database_process.remove_search_rows(search_id)
