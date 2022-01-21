@@ -117,7 +117,7 @@ def filter_results(search_id, bill_of_materials):
     remove_search_rows(search_id)
     for item in final_results:
         make_transient(item)
-    print(len(final_results))
+
     db.session.add_all(final_results)
     db.session.commit()
 

@@ -1,3 +1,6 @@
+"""
+defines the models which are used to make up the database tables.
+"""
 from flask_login import UserMixin
 from app import db
 from werkzeug.security import generate_password_hash
